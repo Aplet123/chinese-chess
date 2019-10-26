@@ -1,0 +1,24 @@
+{
+  "name": "chinesechess",
+  "version": "1.0.0",
+  "description": "A nice game of Chinese Chess.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Testing yay\"",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aplet123/chinese-chess.git"
+  },
+  "author": "Aplet123",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aplet123/chinese-chess/issues"
+  },
+  "homepage": "https://github.com/Aplet123/chinese-chess#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
