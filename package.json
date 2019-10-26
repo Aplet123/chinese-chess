@@ -7,6 +7,9 @@
     "test": "echo \"Testing yay\"",
     "start": "node index.js"
   },
+  "engines": {
+    "node": "13.0.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Aplet123/chinese-chess.git"
