@@ -1,7 +1,32 @@
 const express = require("express");
 require("dotenv").config();
+const WebSocket = require("ws");
+const Board = require("./src/Board.js");
 const app = express();
-const port = process.env.PORT_NUM || 8080;
+const wss = new WebSocket.Server({
+    port: process.env.WS_PORT || 9091
+});
+const boards = [];
+wss.on("connection", function(ws) {
+    function sendInstruction(ins, v) {
+        ws.send(JSON.stringify({
+            ins,
+            v
+        }));
+    }
+    ws.on("message", function(msg) {
+        var data = JSON.parse(msg);
+        if (data.ins == "CREATE") {
+            let newBoard = new Board();
+            if (Math.random() < 0.5) {
+                sendInstruction("KEY", newBoard.whiteKey);
+            } else {
+                sendInstruction("KEY", newBoard.blackKey);
+            }
+        }
+    });
+});
+const port = process.env.PORT || 9090;
 
 app.use(express.static("./public"));
 
