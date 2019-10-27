@@ -1,17 +1,3 @@
-var cur = -1;
-
-function leftPad(str, len, char) {
-    return char.repeat(Math.max(0, len - str.length)) + str;
-}
-
-function genKey() {
-    cur ++;
-    if (cur >= parseInt("1000000", 36)) {
-        cur = 0;
-    }
-    return leftPad(cur.toString(36).toUpperCase(), 6, "0");
-}
-
 class Board {
     constructor() {
         if (this.constructor == Board) {
@@ -20,8 +6,6 @@ class Board {
         this.coords = new Array(11).fill(0).map(v => new Array(12).fill(null));
         this.whiteKey = genKey();
         this.blackKey = genKey();
-        this.whitePlayer = false;
-        this.blackPlayer = false;
     }
 
     render() {
