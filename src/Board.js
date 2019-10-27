@@ -1,9 +1,15 @@
+var cur = -1;
+
 function leftPad(str, len, char) {
     return char.repeat(Math.max(0, len - str.length)) + str;
 }
 
 function genKey() {
-    return leftPad(Math.floor(Math.random() * parseInt("ffffff", 36)).toString(36).toUpperCase(), 6, "0");
+    cur ++;
+    if (cur >= parseInt("1000000", 36)) {
+        cur = 0;
+    }
+    return leftPad(cur.toString(36).toUpperCase(), 6, "0");
 }
 
 class Board {
@@ -16,6 +22,10 @@ class Board {
         this.blackKey = genKey();
         this.whitePlayer = false;
         this.blackPlayer = false;
+    }
+
+    render() {
+
     }
 
     getPieces() {

@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const WebSocket = require("ws");
-const Board = require("./src/Board.js");
+const StandardBoard = require("./src/StandardBoard.js");
 const app = express();
 const wss = new WebSocket.Server({
     port: process.env.WS_PORT || 9091
@@ -17,12 +17,13 @@ wss.on("connection", function(ws) {
     ws.on("message", function(msg) {
         var data = JSON.parse(msg);
         if (data.ins == "CREATE") {
-            let newBoard = new Board();
+            let newBoard = new StandardBoard();
             if (Math.random() < 0.5) {
                 sendInstruction("KEY", newBoard.whiteKey);
             } else {
                 sendInstruction("KEY", newBoard.blackKey);
             }
+            boards.push(newBoard);
         }
     });
 });

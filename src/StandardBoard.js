@@ -4,7 +4,7 @@ class StandardBoard extends Board {
         super();
         this.turn = "white";
         this.render(8, 9, 30, 60, 20, 4, 3, 0, 2, 2);
-        this.addPiece(WhitePawn, 0, 6);
+        /*this.addPiece(WhitePawn, 0, 6);
         this.addPiece(WhitePawn, 2, 6);
         this.addPiece(WhitePawn, 4, 6);
         this.addPiece(WhitePawn, 6, 6);
@@ -35,7 +35,7 @@ class StandardBoard extends Board {
         this.addPiece(BlackGuard, 3, 0);
         this.addPiece(BlackGuard, 5, 0);
         this.whiteKing = this.addPiece(WhiteKing, 4, 9);
-        this.blackKing = this.addPiece(BlackKing, 4, 0);
+        this.blackKing = this.addPiece(BlackKing, 4, 0);*/
     }
 
     movePiece(piece, x, y) {
@@ -47,3 +47,5 @@ class StandardBoard extends Board {
         }
     }
 }
+
+module.exports = StandardBoard;
