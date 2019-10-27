@@ -1,5 +1,3 @@
-const boards = [];
-
 function connection (ws) {
     function sendInstruction(ins, v) {
         ws.send(JSON.stringify({
@@ -22,6 +20,8 @@ function connection (ws) {
                 sendInstruction("KEY", newBoard.blackKey);
             }
             boards.push(newBoard);
+        } else if (data.ins == "MOVE") {
+            console.log(data.v);
         }
     });
 }
