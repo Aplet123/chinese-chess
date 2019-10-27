@@ -79,7 +79,6 @@ class WhitePiece extends Piece {
     }
 
     canMove() {
-        return true;
         return this.board.turn == "white";
     }
 
@@ -97,7 +96,6 @@ class BlackPiece extends Piece {
     }
 
     canMove() {
-        return true;
         return this.board.turn == "black";
     }
 
@@ -148,7 +146,6 @@ class BlackPawn extends BlackPiece {
         }
         return ret;
     }
-
 }
 
 class WhiteCannon extends WhitePiece {
