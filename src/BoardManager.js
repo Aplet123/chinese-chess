@@ -101,12 +101,8 @@ class BoardManager {
         let board = this.getBoard(key);
         if (board && board.coords[x0]) {
             let piece = board.coords[x0][y0];
-            console.log(board.coords, x0, y0);
-            console.log(piece.getMoves());
             if (piece && piece.getMoves().some(v => v[0] == x1 && v[1] == y1)) {
                 board.movePiece(board.coords[x0][y0], x1, y1);
-            } else {
-                console.log("a move was rejected");
             }
         }
     }
