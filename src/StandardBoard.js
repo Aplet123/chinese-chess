@@ -3,7 +3,7 @@ const pieces = require("./getPieces.js");
 
 class StandardBoard extends Board {
     constructor() {
-        super();
+        super(9, 10);
         this.turn = "white";
         this.render(8, 9, 30, 60, 20, 4, 3, 0, 2, 2);
         this.addPiece(pieces.WhitePawn, 0, 6);

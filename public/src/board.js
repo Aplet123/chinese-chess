@@ -1,9 +1,9 @@
 class Board {
-    constructor() {
+    constructor(w, h) {
         if (this.constructor == Board) {
             throw new Error("Cannot construct abstract class Board");
         }
-        this.coords = new Array(11).fill(0).map(v => new Array(12).fill(null));
+        this.coords = new Array(w).fill(0).map(v => new Array(h).fill(null));
     }
     
     getPieces() {
@@ -194,7 +194,7 @@ class Board {
 
 class StandardBoard extends Board {
     constructor() {
-        super();
+        super(9, 10);
         this.turn = "white";
         this.render(8, 9, 30, 60, 20, 4, 3, 0, 2, 2);
         this.addPiece(WhitePawn, 0, 6);

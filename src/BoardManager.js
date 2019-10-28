@@ -4,6 +4,10 @@ class BoardManager {
     constructor() {
         this.boards = [];
         this.curKey = 0;
+        this.whitePlayer = false;
+        this.blackPlayer = false;
+        this.whiteWS = null;
+        this.blackWS = null;
     }
 
     leftPad(str, len, char) {
@@ -15,14 +19,16 @@ class BoardManager {
         if (this.curKey >= parseInt("1000000", 36)) {
             this.curKey = 0;
         }
-        return leftPad(this.curKey.toString(36).toUpperCase(), 6, "0");
+        return this.leftPad(this.curKey.toString(36).toUpperCase(), 6, "0");
     }
 
     createBoard() {
         let newBoard = new StandardBoard();
         newBoard.whitePlayer = false;
         newBoard.blackPlayer = false;
-        boards.push(newBoard);
+        newBoard.whiteKey = this.genKey();
+        newBoard.blackKey = this.genKey();
+        this.boards.push(newBoard);
         if (Math.random() < 0.5) {
             return newBoard.whiteKey;
         } else {
@@ -35,7 +41,7 @@ class BoardManager {
     }
 
     getSide(key) {
-        let board = getBoard(key);
+        let board = this.getBoard(key);
         if (board) {
             if (key == board.whiteKey) {
                 return "white";
@@ -47,32 +53,80 @@ class BoardManager {
     }
 
     getOtherKey(key) {
-        let board = getBoard(key);
-        let side = getSide(key);
-        if (side == "white") {
+        let board = this.getBoard(key);
+        let side = this.getSide(key);
+        if (board && side && side == "white") {
            return board.blackKey;
-        } else if (side == "black" ){
+        } else if (board && side && side == "black" ){
             return board.whiteKey;
         }
     }
 
-    join(key) {
-        let board = getBoard(key);
-        let side = getSide(key);
+    join(key, ws) {
+        let board = this.getBoard(key);
+        let side = this.getSide(key);
         if (side == "white") {
             board.whitePlayer = true;
+            board.whiteWS = ws;
         } else if (side == "black" ){
             board.blackPlayer = true;
+            board.blackWS = ws;
         }
     }
 
     leave(key) {
-        let board = getBoard(key);
-        let side = getSide(key);
+        let board = this.getBoard(key);
+        let side = this.getSide(key);
         if (side == "white") {
             board.whitePlayer = false;
+            board.whiteWS = null;
         } else if (side == "black" ){
             board.blackPlayer = false;
+            board.blackWS = null;
+        }
+    }
+
+    isAvailable(key) {
+        let board = this.getBoard(key);
+        let side = this.getSide(key);
+        if (board && side && side == "white") {
+            return !board.whitePlayer;
+        } else if (board && side && side == "black" ){
+            return !board.blackPlayer;
+        }
+        return false;
+    }
+
+    move(key, x0, y0, x1, y1) {
+        let board = this.getBoard(key);
+        if (board && board.coords[x0]) {
+            let piece = board.coords[x0][y0];
+            console.log(board.coords, x0, y0);
+            console.log(piece.getMoves());
+            if (piece && piece.getMoves().some(v => v[0] == x1 && v[1] == y1)) {
+                board.movePiece(board.coords[x0][y0], x1, y1);
+            } else {
+                console.log("a move was rejected");
+            }
+        }
+    }
+
+    sendAll(key, ins, v) {
+        let board = this.getBoard(key);
+        if (!board) {
+            return;
+        }
+        if (board.whiteWS) {
+            board.whiteWS.send(JSON.stringify({
+                ins,
+                v
+            }));
+        }
+        if (board.blackWS) {
+            board.blackWS.send(JSON.stringify({
+                ins,
+                v
+            }));
         }
     }
 }

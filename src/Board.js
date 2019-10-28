@@ -1,22 +1,31 @@
+const pieces = require("./getPieces.js");
+
 class Board {
-    constructor() {
+    constructor(w, h) {
         if (this.constructor == Board) {
             throw new Error("Cannot construct abstract class Board");
         }
-        this.coords = new Array(11).fill(0).map(v => new Array(12).fill(null));
-        this.whiteKey = genKey();
-        this.blackKey = genKey();
+        this.coords = new Array(w).fill(0).map(v => new Array(h).fill(null));
     }
 
-    render() {
-
+    render(width, height, pad, tileSide, pieceRad, river, crossX, crossY, crossWidth, crossHeight) {
+        this.width = width;
+        this.height = height;
+        this.pad = pad;
+        this.tileSide = tileSide;
+        this.pieceRad = pieceRad;
+        this.river = river;
+        this.crossX = crossX;
+        this.crossY = crossY;
+        this.crossWidth = crossWidth;
+        this.crossHeight = crossHeight;
     }
 
     getPieces() {
         var ret = [];
         for (var i = 0; i < this.coords.length; i ++) {
             for (var j = 0; j < this.coords[i].length; j ++) {
-                if (this.coords[i][j] instanceof Piece) {
+                if (this.coords[i][j] instanceof pieces.Piece) {
                     ret.push(this.coords[i][j]);
                 }
             }
@@ -83,7 +92,7 @@ class Board {
         var origX = piece.x;
         var origY = piece.y;
         var insert = this.movePieceSilent(piece, move[0], move[1]);
-        var isCheck = this.getPieces().filter(v => v instanceof BlackPiece).some(moves => moves.getMovesNoCheck().some(m => m[0] == this.whiteKing.x && m[1] == this.whiteKing.y));
+        var isCheck = this.getPieces().filter(v => v instanceof pieces.BlackPiece).some(moves => moves.getMovesNoCheck().some(m => m[0] == this.whiteKing.x && m[1] == this.whiteKing.y));
         this.movePieceSilent(piece, origX, origY);
         if (insert) {
             this.coords[move[0]][move[1]] = insert;
@@ -95,7 +104,7 @@ class Board {
         var origX = piece.x;
         var origY = piece.y;
         var insert = this.movePieceSilent(piece, move[0], move[1]);
-        var isCheck = this.getPieces().filter(v => v instanceof WhitePiece).some(moves => moves.getMovesNoCheck().some(m => m[0] == this.blackKing.x && m[1] == this.blackKing.y));
+        var isCheck = this.getPieces().filter(v => v instanceof pieces.WhitePiece).some(moves => moves.getMovesNoCheck().some(m => m[0] == this.blackKing.x && m[1] == this.blackKing.y));
         this.movePieceSilent(piece, origX, origY);
         if (insert) {
             this.coords[move[0]][move[1]] = insert;
@@ -104,19 +113,19 @@ class Board {
     }
 
     isValidMove(piece, move) {
-        if(piece instanceof WhitePiece) {
+        if(piece instanceof pieces.WhitePiece) {
             return (!this.checkLineOfSight(piece, move)) && (!this.isWhiteCheck(piece, move));
         }
-        if(piece instanceof BlackPiece) {
+        if(piece instanceof pieces.BlackPiece) {
             return (!this.checkLineOfSight(piece, move)) && (!this.isBlackCheck(piece, move));
         }
     }
 
     isValidMoveNoCheck(piece, move) {
-        if (piece instanceof WhitePiece) {
+        if (piece instanceof pieces.WhitePiece) {
             return !this.checkLineOfSight(piece, move);
         }
-        if (piece instanceof BlackPiece) {
+        if (piece instanceof pieces.BlackPiece) {
             return !this.checkLineOfSight(piece, move);
         }
     }

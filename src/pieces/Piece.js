@@ -28,6 +28,10 @@ class Piece {
     filterNoCheck(moves) {
         return moves.filter(v => this.board.isValidMoveNoCheck(this, v));
     }
+
+    render() {}
+
+    derender() {}
 }
 
 module.exports = Piece;

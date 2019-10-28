@@ -8,7 +8,6 @@ class Piece {
         this.y = y;
         this.tag = null;
         this.board = board;
-        this.render();
     }
 
     getMoves() {
