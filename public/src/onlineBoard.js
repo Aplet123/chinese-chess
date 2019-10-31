@@ -1,6 +1,6 @@
 class OnlineStandardBoard extends StandardBoard {
     constructor(ws) {
-        super(9, 10);
+        super();
         this.ws = ws;
         this.joined = false;
         ws.addEventListener("message", this.handleMessage.bind(this));

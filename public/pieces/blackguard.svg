@@ -1,0 +1,8 @@
+<svg id="piece" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <g transform="translate(-100 -100)">
+        <path fill="#FEDAA4" stroke="#000000" stroke-width="6.15px" stroke-linecap="round" stroke-linejoin="bevel" d="M200,100A100,100,0,1,1,100,0,100,100,0,0,1,200,100Z"/>
+        <path fill="none" stroke-width="6.87px" stroke="#000000" stroke-linecap="round" stroke-linejoin="bevel" d="M189.57,100A89.57,89.57,0,1,1,100,10.43,89.57,89.57,0,0,1,189.57,100Z"/>
+        <path stroke="#000000" fill="#000000" stroke-width="3.08px"
+              d="M95.67,60.77V89.13H45.19L49,93a30.29,30.29,0,0,1,9.61-1.44h37V142H53.85l3.84,3.85a30.07,30.07,0,0,1,9.62-1.45h79.32L137,134.81,130.29,142H102.88V91.54h51.93l-9.14-9.62-7.21,7.21H102.88V53.56l3.85-3.37L95.19,44.9q.48,10.1.48,15.87Z"/>
+    </g>
+</svg>

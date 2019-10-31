@@ -28,7 +28,7 @@ class Piece {
                     .classed("moveIndicator", true)
                     .attr("cx", v[0] * this.board.tileSide + this.board.pad)
                     .attr("cy", v[1] * this.board.tileSide + this.board.pad)
-                    .attr("r", this.board.pieceRad)
+                    .attr("r", this.board.pieceRad * 5)
                     .on("click", function() {
                         cur.board.moveGroup.html("");
                         cur.board.movePiece(cur, v[0], v[1]);
@@ -105,7 +105,7 @@ class BlackPiece extends Piece {
 
 class WhitePawn extends WhitePiece {
     constructor(x, y, board) {
-        super("#whitePawn", x, y, board);
+        super("/pieces/whitepawn.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -127,7 +127,7 @@ class WhitePawn extends WhitePiece {
 
 class BlackPawn extends BlackPiece {
     constructor(x, y, board) {
-        super("#blackPawn", x, y, board);
+        super("/pieces/blackpawn.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -149,7 +149,7 @@ class BlackPawn extends BlackPiece {
 
 class WhiteCannon extends WhitePiece {
     constructor(x, y, board) {
-        super("#whitePawn", x, y, board);
+        super("/pieces/whitecannon.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -221,7 +221,7 @@ class WhiteCannon extends WhitePiece {
 
 class BlackCannon extends BlackPiece {
     constructor(x, y, board) {
-        super("#blackPawn", x, y, board);
+        super("/pieces/blackcannon.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -293,7 +293,7 @@ class BlackCannon extends BlackPiece {
 
 class WhiteRook extends WhitePiece {
     constructor(x, y, board) {
-        super("#whitePawn", x, y, board);
+        super("/pieces/whiterook.svg#piece", x, y, board);
     }
     
     getMovesNoFilter() {
@@ -335,7 +335,7 @@ class WhiteRook extends WhitePiece {
 
 class BlackRook extends BlackPiece {
     constructor(x, y, board) {
-        super("#blackPawn", x, y, board);
+        super("/pieces/blackrook.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -377,7 +377,7 @@ class BlackRook extends BlackPiece {
 
 class WhiteKnight extends WhitePiece {
     constructor(x, y, board) {
-        super("#whitePawn", x, y, board);
+        super("/pieces/whiteknight.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -424,7 +424,7 @@ class WhiteKnight extends WhitePiece {
 
 class BlackKnight extends BlackPiece {
     constructor(x, y, board) {
-        super("#blackPawn", x, y, board);
+        super("/pieces/blackknight.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -471,7 +471,7 @@ class BlackKnight extends BlackPiece {
 
 class WhiteElephant extends WhitePiece {
     constructor(x, y, board) {
-        super("#whitePawn", x, y, board);
+        super("/pieces/whiteelephant.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -498,7 +498,7 @@ class WhiteElephant extends WhitePiece {
 
 class BlackElephant extends BlackPiece {
     constructor(x, y, board) {
-        super("#blackPawn", x, y, board);
+        super("/pieces/blackelephant.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -525,7 +525,7 @@ class BlackElephant extends BlackPiece {
 
 class WhiteGuard extends WhitePiece {
     constructor(x, y, board) {
-        super("#whitePawn", x, y, board);
+        super("/pieces/whiteguard.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -552,7 +552,7 @@ class WhiteGuard extends WhitePiece {
 
 class BlackGuard extends BlackPiece {
     constructor(x, y, board) {
-        super("#blackPawn", x, y, board);
+        super("/pieces/blackguard.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -579,7 +579,7 @@ class BlackGuard extends BlackPiece {
 
 class WhiteKing extends WhitePiece {
     constructor(x, y, board) {
-        super("#whitePawn", x, y, board);
+        super("/pieces/whiteking.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {
@@ -606,7 +606,7 @@ class WhiteKing extends WhitePiece {
 
 class BlackKing extends BlackPiece {
     constructor(x, y, board) {
-        super("#blackPawn", x, y, board);
+        super("/pieces/blackking.svg#piece", x, y, board);
     }
 
     getMovesNoFilter() {

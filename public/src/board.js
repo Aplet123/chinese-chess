@@ -196,7 +196,7 @@ class StandardBoard extends Board {
     constructor() {
         super(9, 10);
         this.turn = "white";
-        this.render(8, 9, 30, 60, 20, 4, 3, 0, 2, 2);
+        this.render(8, 9, 30, 60, 4, 4, 3, 0, 2, 2);
         this.addPiece(WhitePawn, 0, 6);
         this.addPiece(WhitePawn, 2, 6);
         this.addPiece(WhitePawn, 4, 6);
