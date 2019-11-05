@@ -24,6 +24,7 @@ function connection (ws) {
                 key = data.v;
                 bm.join(key, ws);
                 sendInstruction("JOINED", true);
+                sendInstruction("BOARD", serialize(bm.getBoard(key)));
             } else {
                 sendInstruction("JOINED", false);
             }

@@ -35,4 +35,5 @@ function deserializeBoard(board, v) {
         }
     }));
     board.getPieces().forEach(v => v.render());
+    board.updateMovetext();
 }

@@ -9,6 +9,16 @@ const wss = new WebSocket.Server({
 wss.on("connection", connection);
 const port = process.env.PORT || 9090;
 
+app.use(function (req, res, next) {
+    // prevent caching for development purposes
+    res.set({
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
+    });
+    next();
+});
+
 app.use(express.static("./public"));
 
 app.listen(port);

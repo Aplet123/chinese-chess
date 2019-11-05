@@ -68,3 +68,7 @@ svg {
     fill: #c00;
     stroke-width: 3.08px;
 }
+
+.hidden {
+    display: none;
+}
