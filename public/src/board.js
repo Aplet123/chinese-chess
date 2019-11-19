@@ -30,6 +30,13 @@ class Board {
         if (this.coords[x][y] != null) {
             this.removePiece(this.coords[x][y]);
         }
+        this.arrowGroup.html("");
+        this.arrowGroup.append("line")
+            .attr("x1", piece.x * this.tileSide + this.pad)
+            .attr("y1", piece.y * this.tileSide + this.pad)
+            .attr("x2", x * this.tileSide + this.pad)
+            .attr("y2", y * this.tileSide + this.pad)
+            .classed("moveArrow", true);
         piece.move(x, y);
         this.coords[x][y] = piece;
         piece.render();
@@ -126,12 +133,13 @@ class Board {
         this.crossY = crossY;
         this.crossWidth = crossWidth;
         this.crossHeight = crossHeight;
-        this.svg = d3.select("body").append("svg");
-        this.svg.attr("width", 1200)
-            .attr("height", 1200)
-            .attr("viewbox", "0 0 1100 1100")
+        this.svg = d3.select("#flex").append("svg");
+        this.svg.attr("width", 600)
+            .attr("height", 1100)
+            .attr("viewbox", "0 0 600 1100")
             .attr("preserveAspectRatio", "xMidYMid meet");
         this.boardGroup = this.svg.append("g");
+        this.arrowGroup = this.svg.append("g");
         this.pieceGroup = this.svg.append("g");
         this.moveGroup = this.svg.append("g");
         this.tileGroup = this.boardGroup.append("g");
@@ -196,7 +204,7 @@ class StandardBoard extends Board {
     constructor() {
         super(9, 10);
         this.turn = "white";
-        this.render(8, 9, 30, 60, 4, 4, 3, 0, 2, 2);
+        this.render(8, 9, 30, 60, 23, 4, 3, 0, 2, 2);
         this.addPiece(WhitePawn, 0, 6);
         this.addPiece(WhitePawn, 2, 6);
         this.addPiece(WhitePawn, 4, 6);

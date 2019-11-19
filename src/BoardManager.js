@@ -3,11 +3,7 @@ const StandardBoard = require("./StandardBoard.js");
 class BoardManager {
     constructor() {
         this.boards = [];
-        this.curKey = 0;
-        this.whitePlayer = false;
-        this.blackPlayer = false;
-        this.whiteWS = null;
-        this.blackWS = null;
+        this.curKey = Math.floor(Math.random() * parseInt("zzzzza", 36));
     }
 
     leftPad(str, len, char) {
@@ -28,6 +24,8 @@ class BoardManager {
         newBoard.blackPlayer = false;
         newBoard.whiteKey = this.genKey();
         newBoard.blackKey = this.genKey();
+        newBoard.whiteWS = null;
+        newBoard.blackWS = null;
         this.boards.push(newBoard);
         if (Math.random() < 0.5) {
             return newBoard.whiteKey;
@@ -91,7 +89,7 @@ class BoardManager {
         let side = this.getSide(key);
         if (board && side && side == "white") {
             return !board.whitePlayer;
-        } else if (board && side && side == "black" ){
+        } else if (board && side && side == "black" ) {
             return !board.blackPlayer;
         }
         return false;
@@ -103,27 +101,45 @@ class BoardManager {
             let piece = board.coords[x0][y0];
             if (piece && piece.getMoves().some(v => v[0] == x1 && v[1] == y1) && board.turn == this.getSide(key)) {
                 board.movePiece(board.coords[x0][y0], x1, y1);
+                this.sendOther(key, "LASTMOVE", [x0, y0, x1, y1]);
             }
         }
     }
 
-    sendAll(key, ins, v) {
+    sendTo(key, ins, v) {
         let board = this.getBoard(key);
         if (!board) {
             return;
         }
-        if (board.whiteWS) {
+        let side = this.getSide(key);
+        if (!side) {
+            return;
+        }
+        if (board.whiteWS && side == "white") {
             board.whiteWS.send(JSON.stringify({
                 ins,
                 v
             }));
         }
-        if (board.blackWS) {
+        if (board.blackWS && side == "black") {
             board.blackWS.send(JSON.stringify({
                 ins,
                 v
             }));
         }
+    }
+
+    sendOther(key, ins, v) {
+        key = this.getOtherKey(key);
+        if (!key) {
+            return;
+        }
+        this.sendTo(key, ins, v);
+    }
+
+    sendAll(key, ins, v) {
+        this.sendTo(key, ins, v);
+        this.sendOther(key, ins, v);
     }
 }
 

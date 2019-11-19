@@ -24,13 +24,20 @@ function connection (ws) {
                 key = data.v;
                 bm.join(key, ws);
                 sendInstruction("JOINED", true);
+                sendInstruction("SIDE", bm.getSide(key));
                 sendInstruction("BOARD", serialize(bm.getBoard(key)));
+                sendInstruction("KEY", key);
+                sendInstruction("OTHERKEY", bm.getOtherKey(key));
             } else {
                 sendInstruction("JOINED", false);
             }
         } else if (data.ins == "GETOTHERKEY") {
             if (key) {
                 sendInstruction("OTHERKEY", bm.getOtherKey(key));
+            }
+        } else if (data.ins == "GETKEY") {
+            if (key) {
+                sendInstruction("KEY", key);
             }
         } else if (data.ins == "MOVE") {
             if (key) {

@@ -28,11 +28,22 @@ class Piece {
                     .classed("moveIndicator", true)
                     .attr("cx", v[0] * this.board.tileSide + this.board.pad)
                     .attr("cy", v[1] * this.board.tileSide + this.board.pad)
-                    .attr("r", this.board.pieceRad * 5)
+                    .attr("r", this.board.pieceRad)
                     .on("click", function() {
                         cur.board.moveGroup.html("");
                         cur.board.movePiece(cur, v[0], v[1]);
                     });
+            });
+        } else {
+            this.board.moveGroup.html("");
+            var moves = this.getMoves();
+            var cur = this;
+            moves.map(v => {
+                this.board.moveGroup.append("circle")
+                    .classed("moveIndicatorGrey", true)
+                    .attr("cx", v[0] * this.board.tileSide + this.board.pad)
+                    .attr("cy", v[1] * this.board.tileSide + this.board.pad)
+                    .attr("r", this.board.pieceRad);
             });
         }
     }
@@ -78,6 +89,9 @@ class WhitePiece extends Piece {
     }
 
     canMove() {
+        if (this.board.side) {
+            return this.board.turn == this.board.side && this.board.turn == "white";
+        }
         return this.board.turn == "white";
     }
 
@@ -95,6 +109,9 @@ class BlackPiece extends Piece {
     }
 
     canMove() {
+        if (this.board.side) {
+            return this.board.turn == this.board.side && this.board.turn == "black";
+        }
         return this.board.turn == "black";
     }
 

@@ -1,4 +1,4 @@
-<svg id="piece" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<svg id="piece" xmlns="http://www.w3.org/2000/svg">
     <g transform="translate(-100 -100)">
         <path fill="#FEDAA4" stroke="#000000" stroke-width="6.15px" stroke-linecap="round" stroke-linejoin="bevel" d="M200,100A100,100,0,1,1,100,0,100,100,0,0,1,200,100Z"/>
         <path fill="none" stroke-width="6.87px" stroke="#000000" stroke-linecap="round" stroke-linejoin="bevel" d="M189.57,100A89.57,89.57,0,1,1,100,10.43,89.57,89.57,0,0,1,189.57,100Z"/>

@@ -4,8 +4,6 @@ body {
 
 svg {
     padding: 5px;
-    display: block;
-    position: absolute;
 }
 
 .tile {
@@ -26,16 +24,24 @@ svg {
     stroke-width: 3px;
 }
 
-#svgContainer {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-}
-
 .moveIndicator {
     fill: #a4f101;
     opacity: 0.5;
     stroke: none;
+}
+
+.moveIndicatorGrey {
+    fill: #666666;
+    opacity: 0.5;
+    stroke: none;
+    pointer-events: none;
+}
+
+.moveArrow {
+    stroke: #a4f101;
+    opacity: 0.5;
+    stroke-width: 10px;
+    stroke-linecap: round;
 }
 
 .movetext {
@@ -71,4 +77,10 @@ svg {
 
 .hidden {
     display: none;
+}
+
+#flex {
+    display: flex;
+    flex-direction: row;
+
 }
