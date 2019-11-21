@@ -9,7 +9,6 @@ class Piece {
     }
 
     getMoves() {
-        console.log(this.getMovesNoFilter());
         return this.filter(this.getMovesNoFilter());
     }
 

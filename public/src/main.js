@@ -6,7 +6,7 @@ d3.select("#bSingle").on("click", function() {
     menu.classed("hidden", true);
 });
 d3.select("#bCreate").on("click", function() {
-    ws = new WebSocket("ws://" + window.location.hostname + ":9091");
+    ws = new WebSocket(location.href.replace(/http/, "ws"));
     ws.addEventListener("open", function() {
         board = new OnlineStandardBoard(ws);
         board.sendInstruction("CREATE");
@@ -14,7 +14,7 @@ d3.select("#bCreate").on("click", function() {
     menu.classed("hidden", true);
 });
 d3.select("#bJoin").on("click", function() {
-    ws = new WebSocket("ws://" + window.location.hostname + ":9091");
+    ws = new WebSocket(location.href.replace(/http/, "ws"));
     ws.addEventListener("open", function() {
         board = new OnlineStandardBoard(ws);
         board.sendInstruction("JOIN", d3.select("#joinCode").node().value);

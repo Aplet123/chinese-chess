@@ -3,10 +3,6 @@ require("dotenv").config();
 const WebSocket = require("ws");
 const connection = require("./src/WSHandle.js");
 const app = express();
-const wss = new WebSocket.Server({
-    port: process.env.WS_PORT || 9091
-});
-wss.on("connection", connection);
 const port = process.env.PORT || 9090;
 
 app.use(function (req, res, next) {
@@ -21,5 +17,9 @@ app.use(function (req, res, next) {
 
 app.use(express.static("./public"));
 
-app.listen(port);
+const server = app.listen(port);
+const wss = new WebSocket.Server({
+    server
+});
+wss.on("connection", connection);
 console.log("Listening on port " + port);

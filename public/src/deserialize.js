@@ -43,7 +43,7 @@ function deserializeBoard(board, v) {
                 board.blackKing = piece;
             }
             piece.render();
-            return new pieces[k](i, j, board);
+            return piece;
         }
         return v;
     }));
