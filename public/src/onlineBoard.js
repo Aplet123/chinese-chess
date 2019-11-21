@@ -59,8 +59,8 @@ class OnlineStandardBoard extends StandardBoard {
     }
 
     movePiece(piece, x, y) {
-        this.sendInstruction("MOVE", [piece.x, piece.y, x, y]);
         super.movePiece(piece, x, y);
+        this.sendInstruction("MOVE", [piece.x, piece.y, x, y]);
     }
 
     updateMovetext() {

@@ -64,6 +64,12 @@ class Board {
     }
 
     checkLineOfSight(piece, move) {
+        if (piece instanceof BlackPiece && move[0] == this.whiteKing.x && move[1] == this.whiteKing.y) {
+            return false;
+        }
+        if (piece instanceof WhitePiece && move[0] == this.blackKing.x && move[1] == this.blackKing.y) {
+            return false;
+        }
         var origX = piece.x;
         var origY = piece.y;
         var insert = this.movePieceSilent(piece, move[0], move[1]);

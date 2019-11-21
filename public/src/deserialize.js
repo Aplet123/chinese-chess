@@ -26,7 +26,28 @@ function deserializeBoard(board, v) {
         return;
     }
     board.turn = data.turn;
-    board.getPieces().forEach(v => v.derender());
+    board.coords = board.coords.map((arr, i) => arr.map((v, j) => {
+        let k = data.state[i][j];
+        if (k == "" && v != null) {
+            v.derender();
+            return null;
+        } else if (pieces[k] && (!(v instanceof pieces[k]))) {
+            if (v != null) {
+                v.derender();
+            }
+            let piece = new pieces[k](i, j, board);
+            if (piece instanceof WhiteKing) {
+                board.whiteKing = piece;
+            }
+            if (piece instanceof BlackKing) {
+                board.blackKing = piece;
+            }
+            piece.render();
+            return new pieces[k](i, j, board);
+        }
+        return v;
+    }));
+    /*board.getPieces().forEach(v => v.derender());
     board.coords = data.state.map((arr, i) => arr.map((v, j) => {
         if (pieces[v]) {
             return new pieces[v](i, j, board);
@@ -34,6 +55,6 @@ function deserializeBoard(board, v) {
             return null;
         }
     }));
-    board.getPieces().forEach(v => v.render());
+    board.getPieces().forEach(v => v.render());*/
     board.updateMovetext();
 }

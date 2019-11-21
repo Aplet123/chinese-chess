@@ -43,7 +43,10 @@ class Piece {
                     .classed("moveIndicatorGrey", true)
                     .attr("cx", v[0] * this.board.tileSide + this.board.pad)
                     .attr("cy", v[1] * this.board.tileSide + this.board.pad)
-                    .attr("r", this.board.pieceRad);
+                    .attr("r", this.board.pieceRad)
+                    .on("click", function() {
+                        cur.board.moveGroup.html("");
+                    });
             });
         }
     }
