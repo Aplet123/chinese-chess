@@ -75,10 +75,10 @@ class BoardManager {
     leave(key) {
         let board = this.getBoard(key);
         let side = this.getSide(key);
-        if (side == "white") {
+        if (board && side == "white") {
             board.whitePlayer = false;
             board.whiteWS = null;
-        } else if (side == "black" ){
+        } else if (board && side == "black" ){
             board.blackPlayer = false;
             board.blackWS = null;
         }

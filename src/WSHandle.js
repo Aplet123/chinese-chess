@@ -24,6 +24,7 @@ function connection (ws) {
                 key = data.v;
                 bm.join(key, ws);
                 sendInstruction("JOINED", true);
+                bm.sendOther(key, "OP_JOINED");
                 sendInstruction("SIDE", bm.getSide(key));
                 sendInstruction("BOARD", serialize(bm.getBoard(key)));
                 sendInstruction("KEY", key);
@@ -47,6 +48,16 @@ function connection (ws) {
                 }
             }
         }
+    });
+    ws.on("close", function() {
+        console.log("close with key " + key);
+        bm.sendOther(key, "OP_DC");
+        bm.leave(key);
+    });
+    // close broken connections
+    ws.alive = true;
+    ws.on("pong", function() {
+        this.alive =  true;
     });
 }
 

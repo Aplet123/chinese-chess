@@ -22,4 +22,14 @@ const wss = new WebSocket.Server({
     server
 });
 wss.on("connection", connection);
+setInterval(function() {
+    wss.clients.forEach(function(c) {
+        if (c.alive) {
+            c.alive = false;
+            c.ping();
+        } else {
+            c.terminate();
+        }
+    });
+}, 15000);
 console.log("Listening on port " + port);
