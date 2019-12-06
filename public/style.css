@@ -2,6 +2,10 @@ body {
     margin: 0;
 }
 
+* {
+    outline: none;
+}
+
 svg {
     padding: 5px;
 }
@@ -82,5 +86,51 @@ svg {
 #flex {
     display: flex;
     flex-direction: row;
+}
 
+.sidebar {
+    width: 30%;
+}
+
+.chat {
+    height: 30%;
+    border-radius: 10px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    background-color: #ddddff;
+}
+
+.chat div {
+    flex: 1 0 0;
+}
+
+.chat input {
+    width: 100%;
+    border: none;
+    border-top: 1px solid black;
+    border-radius: 0 0 10px 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #ffffff;
+    height: 30px;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+.sidebar p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+}
+
+.chat div p {
+    margin: 0 8px;
+}
+
+.italics {
+    font-style: italic;
+}
+
+.title {
+    font-weight: bold;
 }

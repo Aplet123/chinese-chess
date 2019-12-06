@@ -47,6 +47,15 @@ function connection (ws) {
                     bm.sendAll(key, "BOARD", serialize(bm.getBoard(key)));
                 }
             }
+        } else if (data.ins == "SENDCHAT") {
+            if (key) {
+                if (data.message instanceof String && data.message.length <= 200) {
+                    bm.sendAll(key, "CHAT",  {
+                        side: board.getSide(key),
+                        message: data.message
+                    });
+                }
+            }
         }
     });
     ws.on("close", function() {

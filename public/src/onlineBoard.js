@@ -7,6 +7,20 @@ class OnlineStandardBoard extends StandardBoard {
         this.sidebar = d3.select("#flex").append("div").classed("sidebar", true);
         this.curKeyDisp = this.sidebar.append("p");
         this.otherKeyDisp = this.sidebar.append("p");
+        this.chat = this.sidebar.append("div").classed("chat", true);
+        this.chatMesses = this.chat.append("div");
+        this.chatInput = this.chat.append("input");
+    }
+
+    displayMessage(ops) {
+        ops = Object.assign({
+            italics: false,
+            title: null,
+            message: null
+        }, ops);
+        this.chatMesses.append("p")
+            .html((ops.title ? `<span class="title">${escapeHTML(ops.title)}: </span>` : "") + ops.message)
+            .classed("italics", ops.italics);
     }
 
     handleMessage(m) {
@@ -44,6 +58,27 @@ class OnlineStandardBoard extends StandardBoard {
                 .attr("x2", data.v[2] * this.tileSide + this.pad)
                 .attr("y2", data.v[3] * this.tileSide + this.pad)
                 .classed("moveArrow", true);
+        } else if (data.ins == "OP_JOINED") {
+            this.displayMessage({
+                italics: true,
+                message: "Opponent has joined the room."
+            });
+        } else if (data.ins == "OP_DC") {
+            this.displayMessage({
+                italics: true,
+                message: "Opponent has left the room."
+            });
+        } else if (data.ins == "CHAT") {
+            var title;
+            if (data.side == this.side) {
+                title = "You";
+            } else {
+                title = "Opponent";
+            }
+            this.displayMessage({
+                title: title,
+                message: data.message
+            });
         }
     }
 
