@@ -21,6 +21,6 @@ d3.select("#bJoin").on("click", function() {
     });
     menu.classed("hidden", true);
 });
-window.addEventListener("beforeunload", function() {
-   return "Are you sure?";
-});
+window.onbeforeunload = function() {
+   return "yes";
+};

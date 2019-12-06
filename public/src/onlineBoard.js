@@ -9,7 +9,8 @@ class OnlineStandardBoard extends StandardBoard {
         this.otherKeyDisp = this.sidebar.append("p");
         this.chat = this.sidebar.append("div").classed("chat", true);
         this.chatMesses = this.chat.append("div");
-        this.chatInput = this.chat.append("input");
+        this.chatInput = this.chat.append("input")
+            .attr("placeholder", "Send chat message here...");
         var cur = this;
         this.chatInput.on("keydown", function() {
             if (d3.event.code == "Enter") {
@@ -28,6 +29,7 @@ class OnlineStandardBoard extends StandardBoard {
         this.chatMesses.append("p")
             .html((ops.title ? `<span class="title">${escapeHTML(ops.title)}: </span>` : "") + ops.message)
             .classed("italics", ops.italics);
+        this.chatMesses.node().scroll(0, this.chatMesses.property("scrollHeight"));
     }
 
     handleMessage(m) {

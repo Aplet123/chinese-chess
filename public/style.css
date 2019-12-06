@@ -103,7 +103,20 @@ svg {
 
 .chat div {
     flex: 1 0 0;
-    overflow: hidden;
+    overflow-y: auto;
+}
+
+.chat div::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat div::-webkit-scrollbar-track {
+    background: none;
+}
+
+.chat div::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #333333;
 }
 
 .chat input {
