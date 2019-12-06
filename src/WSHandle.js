@@ -49,17 +49,16 @@ function connection (ws) {
             }
         } else if (data.ins == "SENDCHAT") {
             if (key) {
-                if (data.message instanceof String && data.message.length <= 200) {
+                if ((typeof data.v == "string") && data.v.length <= 200 && data.v.length > 0) {
                     bm.sendAll(key, "CHAT",  {
-                        side: board.getSide(key),
-                        message: data.message
+                        side: bm.getSide(key),
+                        message: data.v
                     });
                 }
             }
         }
     });
     ws.on("close", function() {
-        console.log("close with key " + key);
         bm.sendOther(key, "OP_DC");
         bm.leave(key);
     });

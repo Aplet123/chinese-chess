@@ -1,9 +1,11 @@
 const StandardBoard = require("./StandardBoard.js");
 
+const max = "100000";
+
 class BoardManager {
     constructor() {
         this.boards = [];
-        this.curKey = Math.floor(Math.random() * parseInt("zzzza", 36));
+        this.curKey = Math.floor(Math.random() * parseInt(max, 36));
     }
 
     leftPad(str, len, char) {
@@ -12,10 +14,10 @@ class BoardManager {
 
     genKey() {
         this.curKey ++;
-        if (this.curKey >= parseInt("1000000", 36)) {
+        if (this.curKey >= parseInt(max, 36)) {
             this.curKey = 0;
         }
-        return this.leftPad(this.curKey.toString(36).toUpperCase(), 6, "0");
+        return this.leftPad(this.curKey.toString(36).toUpperCase(), 5, "0");
     }
 
     createBoard() {

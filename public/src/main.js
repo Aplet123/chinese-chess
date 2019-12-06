@@ -1,4 +1,4 @@
-var ws;;
+var ws;
 var board;
 var menu = d3.select("#menu");
 d3.select("#bSingle").on("click", function() {
@@ -20,4 +20,7 @@ d3.select("#bJoin").on("click", function() {
         board.sendInstruction("JOIN", d3.select("#joinCode").node().value);
     });
     menu.classed("hidden", true);
+});
+window.addEventListener("beforeunload", function() {
+   return "Are you sure?";
 });

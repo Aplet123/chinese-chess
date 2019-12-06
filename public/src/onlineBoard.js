@@ -10,6 +10,13 @@ class OnlineStandardBoard extends StandardBoard {
         this.chat = this.sidebar.append("div").classed("chat", true);
         this.chatMesses = this.chat.append("div");
         this.chatInput = this.chat.append("input");
+        var cur = this;
+        this.chatInput.on("keydown", function() {
+            if (d3.event.code == "Enter") {
+                cur.sendInstruction("SENDCHAT", this.value);
+                this.value = "";
+            }
+        });
     }
 
     displayMessage(ops) {
@@ -70,14 +77,14 @@ class OnlineStandardBoard extends StandardBoard {
             });
         } else if (data.ins == "CHAT") {
             var title;
-            if (data.side == this.side) {
+            if (data.v.side == this.side) {
                 title = "You";
             } else {
                 title = "Opponent";
             }
             this.displayMessage({
                 title: title,
-                message: data.message
+                message: data.v.message
             });
         }
     }

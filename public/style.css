@@ -103,6 +103,7 @@ svg {
 
 .chat div {
     flex: 1 0 0;
+    overflow: hidden;
 }
 
 .chat input {
