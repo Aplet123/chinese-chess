@@ -91,15 +91,23 @@ class Board {
         if (insert) {
             this.coords[move[0]][move[1]] = insert;
         }
+        if (this.whiteKing.x != this.blackKing.x) {
+            return false;
+        }
         return isLoS;
     }
 
     isWhiteCheck(piece, move) {
-        var origX = piece.x;
-        var origY = piece.y;
-        var insert = this.movePieceSilent(piece, move[0], move[1]);
+        var origX, origY, insert;
+        if (piece) {
+            origX = piece.x;
+            origY = piece.y;
+            insert = this.movePieceSilent(piece, move[0], move[1]);
+        }
         var isCheck = this.getPieces().filter(v => v instanceof pieces.BlackPiece).some(moves => moves.getMovesNoCheck().some(m => m[0] == this.whiteKing.x && m[1] == this.whiteKing.y));
-        this.movePieceSilent(piece, origX, origY);
+        if (piece) {
+            this.movePieceSilent(piece, origX, origY);
+        }
         if (insert) {
             this.coords[move[0]][move[1]] = insert;
         }
@@ -107,11 +115,16 @@ class Board {
     }
 
     isBlackCheck(piece, move) {
-        var origX = piece.x;
-        var origY = piece.y;
-        var insert = this.movePieceSilent(piece, move[0], move[1]);
+        var origX, origY, insert;
+        if (piece) {
+            origX = piece.x;
+            origY = piece.y;
+            insert = this.movePieceSilent(piece, move[0], move[1]);
+        }
         var isCheck = this.getPieces().filter(v => v instanceof pieces.WhitePiece).some(moves => moves.getMovesNoCheck().some(m => m[0] == this.blackKing.x && m[1] == this.blackKing.y));
-        this.movePieceSilent(piece, origX, origY);
+        if (piece) {
+            this.movePieceSilent(piece, origX, origY);
+        }
         if (insert) {
             this.coords[move[0]][move[1]] = insert;
         }
@@ -134,6 +147,26 @@ class Board {
         if (piece instanceof pieces.BlackPiece) {
             return !this.checkLineOfSight(piece, move);
         }
+    }
+
+    checkWhiteMate() {
+        if (this.getPieces().filter(v => v instanceof pieces.WhitePiece).every(piece => piece.getMoves().length == 0)) {
+            if (this.isWhiteCheck()) {
+                return "checkmate";
+            }
+            return "stalemate";
+        }
+        return false;
+    }
+
+    checkBlackMate() {
+        if (this.getPieces().filter(v => v instanceof pieces.BlackPiece).every(piece => piece.getMoves().length == 0)) {
+            if (this.isBlackCheck()) {
+                return "checkmate";
+            }
+            return "stalemate";
+        }
+        return false;
     }
 }
 

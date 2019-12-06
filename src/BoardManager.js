@@ -3,7 +3,7 @@ const StandardBoard = require("./StandardBoard.js");
 class BoardManager {
     constructor() {
         this.boards = [];
-        this.curKey = Math.floor(Math.random() * parseInt("zzzzza", 36));
+        this.curKey = Math.floor(Math.random() * parseInt("zzzza", 36));
     }
 
     leftPad(str, len, char) {
