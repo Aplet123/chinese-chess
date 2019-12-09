@@ -4,7 +4,7 @@ class OnlineStandardBoard extends StandardBoard {
         this.ws = ws;
         this.joined = false;
         ws.addEventListener("message", this.handleMessage.bind(this));
-        this.sidebar = d3.select("#flex").append("div").classed("sidebar", true);
+        this.sidebar = this.flexParent.append("div").classed("sidebar", true);
         this.curKeyDisp = this.sidebar.append("p");
         this.otherKeyDisp = this.sidebar.append("p");
         this.chat = this.sidebar.append("div").classed("chat", true);
@@ -54,8 +54,7 @@ class OnlineStandardBoard extends StandardBoard {
             if (data.v) {
                 this.joined = true;
             } else {
-                alert("Error joining, key is likely wrong");
-                location.reload();
+                this.showDialog("Error joining, key is likely wrong", function() {location.reload()});
             }
         } else if (data.ins == "OTHERKEY") {
             this.otherKeyDisp.text("Key to invite friend: " + data.v);

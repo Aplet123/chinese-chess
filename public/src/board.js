@@ -161,7 +161,26 @@ class Board {
         return false;
     }
 
-    render(width, height, pad, tileSide, pieceRad, river, crossX, crossY, crossWidth, crossHeight) {
+    showDialog(txt, onClose) {
+        if (onClose) {
+            this.onDialogClose = onClose;
+        }
+        this.dialogBase.classed("hidden", false);
+        this.dialogText.text(txt);
+    }
+
+    hideDialog() {
+        this.dialogBase.classed("hidden", true);
+    }
+
+    updateDimensions() {
+        this.svg.attr("height", innerHeight - 5);
+        this.dialogBase.style("height", innerHeight - 5 + "px")
+            .style("width", this.svg.node().getBoundingClientRect().width - 10 + "px");
+    }
+
+    render(width, height, pad, tileSide, pieceRad, river, crossX, crossY, crossWidth, crossHeight, viewbox) {
+        var cur = this;
         this.width = width;
         this.height = height;
         this.pad = pad;
@@ -172,11 +191,26 @@ class Board {
         this.crossY = crossY;
         this.crossWidth = crossWidth;
         this.crossHeight = crossHeight;
-        this.svg = d3.select("#flex").append("svg");
-        this.svg.attr("width", 600)
-            .attr("height", 1100)
-            .attr("viewbox", "0 0 600 1100")
+        this.flexParent = d3.select("body").append("div").classed("flex", true);
+        this.svg = this.flexParent.append("svg");
+        this.svg.attr("viewBox", viewbox)
             .attr("preserveAspectRatio", "xMidYMid meet");
+        this.dialogBase = this.flexParent.append("div")
+            .classed("dialogBase hidden", true);
+        this.dialogBox = this.dialogBase.append("div")
+            .classed("dialogBox", true);
+        this.dialogText = this.dialogBox.append("p");
+        this.closeDialog = this.dialogBox.append("button").text("Close");
+        this.onDialogClose = function() {
+            cur.hideDialog();
+        }
+        this.closeDialog.on("click", function() {
+            cur.onDialogClose();
+        });
+        window.addEventListener("resize", function() {
+           cur.updateDimensions();
+        });
+        this.updateDimensions();
         this.boardGroup = this.svg.append("g");
         this.arrowGroup = this.svg.append("g");
         this.pieceGroup = this.svg.append("g");
@@ -243,7 +277,7 @@ class StandardBoard extends Board {
     constructor() {
         super(9, 10);
         this.turn = "white";
-        this.render(8, 9, 30, 60, 23, 4, 3, 0, 2, 2);
+        this.render(8, 9, 30, 60, 23, 4, 3, 0, 2, 2, "0 0 600 700");
         this.addPiece(WhitePawn, 0, 6);
         this.addPiece(WhitePawn, 2, 6);
         this.addPiece(WhitePawn, 4, 6);

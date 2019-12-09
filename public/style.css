@@ -7,7 +7,7 @@ body {
 }
 
 svg {
-    padding: 5px;
+    padding: 5px 5px 0 5px;
 }
 
 .tile {
@@ -80,10 +80,10 @@ svg {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
-#flex {
+.flex {
     display: flex;
     flex-direction: row;
 }
@@ -147,4 +147,45 @@ svg {
 
 .title {
     font-weight: bold;
+}
+
+.dialogBase {
+    background-color: #55555580;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialogBox {
+    background-color: #ffffff;
+    width: 50%;
+    height: 30%;
+    border: 1px solid black;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dialogBox p {
+    text-align: center;
+    font-size: 4vh;
+    font-family: "Open Sans", sans-serif;
+    margin: 5px;
+    height: 90%;
+    cursor: default;
+}
+
+.dialogBox button {
+    text-align: center;
+    font-size: 4vh;
+    font-family: "Open Sans", sans-serif;
+    margin-bottom: 5px;
+    border: none;
+    background-color: #1ab7ff;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
 }
