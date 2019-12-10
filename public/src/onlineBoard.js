@@ -27,7 +27,7 @@ class OnlineStandardBoard extends StandardBoard {
             message: null
         }, ops);
         this.chatMesses.append("p")
-            .html((ops.title ? `<span class="title">${escapeHTML(ops.title)}: </span>` : "") + ops.message)
+            .html((ops.title ? `<span class="title">${escapeHTML(ops.title)}: </span>` : "") + escapeHTML(ops.message))
             .classed("italics", ops.italics);
         this.chatMesses.node().scroll(0, this.chatMesses.property("scrollHeight"));
     }
