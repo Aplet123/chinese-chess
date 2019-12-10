@@ -16,11 +16,14 @@
         <script defer src="src/main.js"></script>
     </head>
     <body>
-        <div id="menu">
+        <nav id="menu">
+            <p class="label">Game Controls</p>
             <button id="bSingle">Start Singleplayer Game</button>
             <button id="bCreate">Create Multiplayer Game</button>
-            <button id="bJoin">Join Multiplayer Game</button>
-            <input id="joinCode" />
-        </div>
+            <div>
+                <button id="bJoin">Join Multiplayer Game</button>
+                <input id="joinCode" placeholder="Enter code..."/>
+            </div>
+        </nav>
     </body>
 </html>

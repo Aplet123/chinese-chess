@@ -190,3 +190,42 @@ svg {
     cursor: pointer;
     user-select: none;
 }
+
+nav {
+    border: 2px solid #5394af;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+}
+
+nav p.label {
+    position: absolute;
+    top: -6px;
+    font-family: "Open Sans", sans-serif;
+    color: #5394af;
+    background-color: white;
+}
+
+nav button {
+    border: none;
+    background-color: #8dff8c;
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    width: 300px;
+    flex-shrink: 1;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+nav div input {
+    border: none;
+    border-bottom: 2px solid #000092;
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    margin-left: 10px;
+}
