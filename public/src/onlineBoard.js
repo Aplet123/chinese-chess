@@ -44,7 +44,7 @@ class OnlineStandardBoard extends StandardBoard {
             if (!this.joined) {
                 this.sendInstruction("JOIN", data.v);
             }
-            this.curKeyDisp.text("Key to rejoin: " + data.v);
+            this.curKeyDisp.html(`Key to rejoin: <a href="#${escapeHTML(data.v)}">${escapeHTML(data.v)}</a>`);
         } else if (data.ins == "BOARD") {
             deserializeBoard(this, data.v);
         } else if (data.ins == "SIDE") {
@@ -54,10 +54,12 @@ class OnlineStandardBoard extends StandardBoard {
             if (data.v) {
                 this.joined = true;
             } else {
-                this.showDialog("Error joining, key is likely wrong", function() {location.reload()});
+                this.showDialog("Error joining, key is likely wrong", function() {
+                    location.href = "/";
+                });
             }
         } else if (data.ins == "OTHERKEY") {
-            this.otherKeyDisp.text("Key to invite friend: " + data.v);
+            this.otherKeyDisp.html(`Key to invite friend: <a href="#${escapeHTML(data.v)}">${escapeHTML(data.v)}</a>`);
         } else if (data.ins == "LASTMOVE") {
             this.arrowGroup.html("");
             this.arrowGroup.append("line")

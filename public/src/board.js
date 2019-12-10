@@ -164,6 +164,10 @@ class Board {
     showDialog(txt, onClose) {
         if (onClose) {
             this.onDialogClose = onClose;
+        } else {
+            this.onDialogClose = function() {
+                this.hideDialog();
+            };
         }
         this.dialogBase.classed("hidden", false);
         this.dialogText.text(txt);
@@ -201,9 +205,6 @@ class Board {
             .classed("dialogBox", true);
         this.dialogText = this.dialogBox.append("p");
         this.closeDialog = this.dialogBox.append("button").text("Close");
-        this.onDialogClose = function() {
-            cur.hideDialog();
-        }
         this.closeDialog.on("click", function() {
             cur.onDialogClose();
         });
