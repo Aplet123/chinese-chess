@@ -54,9 +54,7 @@ class OnlineStandardBoard extends StandardBoard {
             if (data.v) {
                 this.joined = true;
             } else {
-                this.showDialog("Error joining, key is likely wrong", function() {
-                    location.href = "/";
-                });
+                this.showDialog("Error joining, key is likely wrong", leavePage);
             }
         } else if (data.ins == "OTHERKEY") {
             this.otherKeyDisp.html(`Key to invite friend: <a href="#${escapeHTML(data.v)}">${escapeHTML(data.v)}</a>`);
@@ -89,6 +87,18 @@ class OnlineStandardBoard extends StandardBoard {
                 title: title,
                 message: data.v.message
             });
+        } else if (data.ins == "WINCON") {
+            var parsed = data.v.split`_`;
+            this.showDialog(`${parsed[0] == "white" ? "White" : "Black"} has been ${parsed[1]}d! ${parsed[1] == "checkmate" ? ((parsed[0] == "white" ? "Black" : "White") + "wins") : "Draw"}!`, leavePage);
+            if (data.v == "white_checkmate") {
+                this.showDialog("White has been checkmated! Black wins!", leavePage);
+            } else if (data.v == "white_stalemate") {
+                this.showDialog("White has been stalemated! Draw!", leavePage);
+            } else if (data.v == "black_checkmate") {
+                this.showDialog("Black has been checkmated! White wins!", leavePage);
+            } else if (data.v == "black_stalemate") {
+                this.showDialog("Black has been stalemated! Draw!", leavePage);
+            }
         }
     }
 
@@ -114,5 +124,9 @@ class OnlineStandardBoard extends StandardBoard {
         } else if (this.turn == "black") {
             this.movetext.text(`You are ${this.side}. Black to move.`);
         }
+    }
+
+    checkWinCon() {
+        // do nothing
     }
 }

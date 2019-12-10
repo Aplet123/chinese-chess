@@ -104,6 +104,15 @@ class BoardManager {
             if (piece && piece.getMoves().some(v => v[0] == x1 && v[1] == y1) && board.turn == this.getSide(key)) {
                 board.movePiece(board.coords[x0][y0], x1, y1);
                 this.sendOther(key, "LASTMOVE", [x0, y0, x1, y1]);
+                if (board.checkWhiteMate() == "checkmate") {
+                    this.sendAll(key, "WINCON", "white_checkmate");
+                } else if (board.checkWhiteMate() == "stalemate") {
+                    this.sendAll(key, "WINCON", "white_stalemate");
+                } else if (board.checkBlackMate() == "checkmate") {
+                    this.sendAll(key, "WINCON", "black_checkmate");
+                } else if (board.checkBlackMate() == "stalemate") {
+                    this.sendAll(key, "WINCON", "black_stalemate");
+                }
             }
         }
     }

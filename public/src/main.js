@@ -25,6 +25,3 @@ if (location.hash.length > 1) {
     d3.select("#joinCode").property("value", location.hash.substr(1));
     d3.select("#bJoin").dispatch("click");
 }
-window.onbeforeunload = function() {
-   return "yes";
-};

@@ -40,6 +40,7 @@ class Board {
         piece.move(x, y);
         this.coords[x][y] = piece;
         piece.render();
+        this.checkWinCon();
     }
 
     movePieceSilent(piece, x, y) {
@@ -161,6 +162,18 @@ class Board {
         return false;
     }
 
+    checkWinCon() {
+        if (this.checkWhiteMate() == "checkmate") {
+            this.showDialog("White has been checkmated! Black wins!", leavePage);
+        } else if (this.checkWhiteMate() == "stalemate") {
+            this.showDialog("White has been stalemated! Draw!", leavePage);
+        } else if (this.checkBlackMate() == "checkmate") {
+            this.showDialog("Black has been checkmated! White wins!", leavePage);
+        } else if (this.checkBlackMate() == "stalemate") {
+            this.showDialog("Black has been stalemated! Draw!", leavePage);
+        }
+    }
+
     showDialog(txt, onClose) {
         if (onClose) {
             this.onDialogClose = onClose;
@@ -271,6 +284,9 @@ class Board {
             .attr("y", 2 * pad + tileSide * height + 50)
             .classed("movetext", true);
         this.updateMovetext();
+        window.onbeforeunload = function() {
+            return "yes";
+        };
     }
 }
 
