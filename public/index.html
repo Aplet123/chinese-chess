@@ -10,6 +10,7 @@
         <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="src/util.js"></script>
         <script defer src="src/cmds.js"></script>
+        <script defer src="src/settings.js"></script>
         <script defer src="src/pieces.js"></script>
         <script defer src="src/deserialize.js"></script>
         <script defer src="src/board.js"></script>
@@ -27,8 +28,8 @@
                 </filter>
             </defs>
         </svg>
+        <p class="label">Game Controls</p>
         <nav id="menu">
-            <p class="label">Game Controls</p>
             <button id="bSingle">Start Local Game</button>
             <button id="bCreate">Create Online Game</button>
             <div>
@@ -36,5 +37,7 @@
                 <input id="joinCode" placeholder="Enter code..."/>
             </div>
         </nav>
+        <p class="label">Test</p>
+        <nav id="settings"></nav>
     </body>
 </html>
