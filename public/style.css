@@ -219,6 +219,7 @@ nav button {
     margin-bottom: 5px;
     border-radius: 5px;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 nav div input {
