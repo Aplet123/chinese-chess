@@ -14,9 +14,40 @@ class OnlineStandardBoard extends StandardBoard {
         var cur = this;
         this.chatInput.on("keydown", function() {
             if (d3.event.code == "Enter") {
-                cur.sendInstruction("SENDCHAT", this.value);
+                var inp = this.value;
+                if (inp[0] == "/") {
+                    // start processing commands
+                    var parsed = inp.substr(1).split` `;
+                    var cmd = parsed[0].toLowerCase();
+                    if (cmd in commands) {
+                        cmd = commands[cmd];
+                        var args = parsed.slice(1)
+                        if (checkProper(args, cmd)) {
+                            var ret = cmd.cmd.apply(cur, args);
+                            if (ret) {
+                                cur.displayMessage(ret);
+                            }
+                        } else {
+                            cur.displayMessage({
+                                italics: true,
+                                message: `Invalid syntax, usage: ${formatCommand(cmd)}`
+                            });
+                        }
+                    } else {
+                        cur.displayMessage({
+                            italics: true,
+                            message: "Command not found. Type /help for a list of commands."
+                        });
+                    }
+                } else {
+                    cur.sendInstruction("SENDCHAT", this.value);
+                }
                 this.value = "";
             }
+        });
+        this.displayMessage({
+            italics: true,
+            message: "Welcome to the chat! Type /help for a list of commands."
         });
     }
 
@@ -98,7 +129,23 @@ class OnlineStandardBoard extends StandardBoard {
                 this.showDialog("Black has been checkmated! White wins!", leavePage);
             } else if (data.v == "black_stalemate") {
                 this.showDialog("Black has been stalemated! Draw!", leavePage);
+            } else if (data.v == "white_forfeit") {
+                this.showDialog("White has forfeited! Black wins!", leavePage);
+            } else if (data.v == "black_forfeit") {
+                this.showDialog("Black has forfeited! White wins!", leavePage);
+            } else if (data.v == "both_draw") {
+                this.showDialog("Players have agreed to a draw! Draw!", leavePage);
             }
+        } else if (data.ins == "OP_DRAW") {
+            this.displayMessage({
+                italics: true,
+                message: "Opponent has offered a draw. Type /draw to accept."
+            });
+        } else if (data.ins == "DRAW_CANCEL") {
+            this.displayMessage({
+                italics: true,
+                message: "Draw offer has been cancelled."
+            });
         }
     }
 

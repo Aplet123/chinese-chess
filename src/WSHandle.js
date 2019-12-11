@@ -57,6 +57,32 @@ function connection (ws) {
                     });
                 }
             }
+        } else if (data.ins == "FORFEIT") {
+            if (key) {
+                let board = bm.getBoard(key);
+                let side = bm.getSide(key);
+                if (board && side) {
+                    bm.sendAll(key, "WINCON", side + "_forfeit");
+                }
+            }
+        } else if (data.ins == "DRAW") {
+            if (key) {
+                let board = bm.getBoard(key);
+                let side = bm.getSide(key);
+                if (board && side) {
+                    if (!(board.blackDraw || board.whiteDraw)) {
+                        bm.sendOther(key, "OP_DRAW");
+                    }
+                    if (side == "black") {
+                        board.blackDraw = true;
+                    } else {
+                        board.whiteDraw = true;
+                    }
+                    if (board.blackDraw && board.whiteDraw) {
+                        bm.sendAll(key, "WINCON", "both_draw");
+                    }
+                }
+            }
         }
     });
     ws.on("close", function() {

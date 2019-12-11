@@ -28,6 +28,8 @@ class BoardManager {
         newBoard.blackKey = this.genKey();
         newBoard.whiteWS = null;
         newBoard.blackWS = null;
+        newBoard.whiteDraw = false;
+        newBoard.blackDraw = false;
         this.boards.push(newBoard);
         if (Math.random() < 0.5) {
             return newBoard.whiteKey;
@@ -103,6 +105,11 @@ class BoardManager {
             let piece = board.coords[x0][y0];
             if (piece && piece.getMoves().some(v => v[0] == x1 && v[1] == y1) && board.turn == this.getSide(key)) {
                 board.movePiece(board.coords[x0][y0], x1, y1);
+                if (board.whiteDraw || board.blackDraw) {
+                    this.sendAll(key, "DRAW_CANCEL");
+                }
+                board.whiteDraw = false;
+                board.blackDraw = false;
                 this.sendOther(key, "LASTMOVE", [x0, y0, x1, y1]);
                 if (board.checkWhiteMate() == "checkmate") {
                     this.sendAll(key, "WINCON", "white_checkmate");
