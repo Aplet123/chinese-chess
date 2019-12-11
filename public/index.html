@@ -17,12 +17,22 @@
         <script defer src="src/main.js"></script>
     </head>
     <body>
+        <svg class="nospace">
+            <defs>
+                <filter id="check" y="-50%" height="200%" x="-50%" width="200%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="0.2" flood-color="#ff0000"/>
+                </filter>
+                <filter id="selected" y="-50%" height="200%" x="-50%" width="200%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="0.2" flood-color="#0000ff"/>
+                </filter>
+            </defs>
+        </svg>
         <nav id="menu">
             <p class="label">Game Controls</p>
-            <button id="bSingle">Start Singleplayer Game</button>
-            <button id="bCreate">Create Multiplayer Game</button>
+            <button id="bSingle">Start Local Game</button>
+            <button id="bCreate">Create Online Game</button>
             <div>
-                <button id="bJoin">Join Multiplayer Game</button>
+                <button id="bJoin">Join Online Game</button>
                 <input id="joinCode" placeholder="Enter code..."/>
             </div>
         </nav>
