@@ -237,3 +237,11 @@ nav div input {
     padding: 0;
     position: absolute;
 }
+
+.check {
+    filter: url(#check);
+}
+
+.selected {
+    filter: url(#selected);
+}

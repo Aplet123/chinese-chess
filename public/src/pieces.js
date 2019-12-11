@@ -20,7 +20,7 @@ class Piece {
 
     showMoves() {
         if (this.canMove()) {
-            this.board.moveGroup.html("");
+            this.board.clearMoves();
             var moves = this.getMoves();
             var cur = this;
             moves.map(v => {
@@ -30,12 +30,12 @@ class Piece {
                     .attr("cy", v[1] * this.board.tileSide + this.board.pad)
                     .attr("r", this.board.pieceRad)
                     .on("click", function() {
-                        cur.board.moveGroup.html("");
+                        cur.board.clearMoves();
                         cur.board.movePiece(cur, v[0], v[1]);
                     });
             });
         } else {
-            this.board.moveGroup.html("");
+            this.board.clearMoves();
             var moves = this.getMoves();
             var cur = this;
             moves.map(v => {
@@ -45,10 +45,15 @@ class Piece {
                     .attr("cy", v[1] * this.board.tileSide + this.board.pad)
                     .attr("r", this.board.pieceRad)
                     .on("click", function() {
-                        cur.board.moveGroup.html("");
+                        cur.board.clearMoves();
                     });
             });
         }
+        if (this.board.selected) {
+            this.board.selected.classed("selected", false);
+        }
+        this.board.selected = this.tag;
+        this.board.selected.classed("selected", true);
     }
 
     render() {

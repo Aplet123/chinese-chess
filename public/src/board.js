@@ -41,6 +41,8 @@ class Board {
         this.coords[x][y] = piece;
         piece.render();
         this.checkWinCon();
+        this.whiteKing.tag.classed("check", this.isWhiteCheck());
+        this.blackKing.tag.classed("check", this.isBlackCheck());
     }
 
     movePieceSilent(piece, x, y) {
@@ -196,6 +198,14 @@ class Board {
             .style("width", this.svg.node().getBoundingClientRect().width - 10 + "px");
     }
 
+    clearMoves() {
+        this.moveGroup.html("");
+        if (this.selected) {
+            this.selected.classed("selected", false);
+            this.selected = null;
+        }
+    }
+
     render(width, height, pad, tileSide, pieceRad, river, crossX, crossY, crossWidth, crossHeight, viewbox) {
         var cur = this;
         this.width = width;
@@ -230,6 +240,10 @@ class Board {
         this.pieceGroup = this.svg.append("g");
         this.moveGroup = this.svg.append("g");
         this.tileGroup = this.boardGroup.append("g");
+        this.selected = null;
+        this.boardGroup.on("click", function() {
+            cur.clearMoves();
+        });
         // generate tiles
         for (var i = 0; i < width; i ++) {
             for (var j = 0; j < height; j ++) {
