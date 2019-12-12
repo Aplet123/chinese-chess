@@ -78,6 +78,8 @@ class OnlineStandardBoard extends StandardBoard {
             this.curKeyDisp.html(`Key to rejoin: <a href="#${escapeHTML(data.v)}">${escapeHTML(data.v)}</a>`);
         } else if (data.ins == "BOARD") {
             deserializeBoard(this, data.v);
+            this.whiteKing.tag.classed("check", this.isWhiteCheck());
+            this.blackKing.tag.classed("check", this.isBlackCheck());
         } else if (data.ins == "SIDE") {
             this.side = data.v;
             this.updateMovetext();
