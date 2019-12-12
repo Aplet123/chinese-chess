@@ -310,3 +310,35 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+.wpiece-icon-1 {
+    fill: #fedaa4;
+    stroke: #000;
+    stroke-width: 6.15px;
+}
+
+.wpiece-icon-1,
+.wpiece-icon-2,
+.wpiece-icon-3 {
+    stroke-linecap: round;
+}
+
+.wpiece-icon-1,
+.wpiece-icon-2 {
+    stroke-linejoin: bevel;
+}
+
+.wpiece-icon-2,
+.wpiece-icon-3 {
+    fill: none;
+    stroke: #c00;
+}
+
+.wpiece-icon-2 {
+    stroke-width: 6.87px;
+}
+
+.wpiece-icon-3 {
+    stroke-linejoin: round;
+    stroke-width: 4.17px;
+}
