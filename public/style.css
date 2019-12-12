@@ -349,3 +349,7 @@ input:checked + .slider:before {
     filter: invert(100%);
     background-color: #000000;
 }
+
+.blind {
+    opacity: 0;
+}

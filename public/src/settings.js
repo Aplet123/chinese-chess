@@ -38,7 +38,18 @@ function addSetting(name, text, resetF, setF) {
     }
 }
 
-addSetting("useicons", "Use icons", function(){}, function(){});
+var suffix = "";
+addSetting("useicons", "Use icons", function () {
+    suffix = "";
+}, function () {
+    suffix = "_icon";
+});
+var blindfolded = false;
+addSetting("blindfold", "Play blindfolded", function () {
+    blindfolded = false;
+}, function () {
+    blindfolded = true;
+});
 addSetting("dark", "dArK mOdE", function () {
     d3.select("body").classed("dark", false);
 }, function () {

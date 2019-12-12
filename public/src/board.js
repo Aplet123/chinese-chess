@@ -301,6 +301,10 @@ class Board {
         window.onbeforeunload = function() {
             return "yes";
         };
+        if (blindfolded) {
+            this.pieceGroup.classed("blind", true);
+            this.moveGroup.classed("blind", true);
+        }
     }
 }
 
