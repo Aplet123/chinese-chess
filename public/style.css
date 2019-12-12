@@ -219,6 +219,7 @@ nav button {
     margin-bottom: 5px;
     border-radius: 5px;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 nav div input {
@@ -227,6 +228,7 @@ nav div input {
     font-size: 20px;
     font-family: "Open Sans", sans-serif;
     margin-left: 10px;
+    background: none;
 }
 
 .nospace {
@@ -341,4 +343,9 @@ input:checked + .slider:before {
 .wpiece-icon-3 {
     stroke-linejoin: round;
     stroke-width: 4.17px;
+}
+
+.dark {
+    filter: invert(100%);
+    background-color: #000000;
 }

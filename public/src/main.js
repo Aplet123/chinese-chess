@@ -1,6 +1,6 @@
 var ws;
 var board;
-var menu = d3.select("#menu");
+var menu = d3.select("#navs");
 d3.select("#bSingle").on("click", function () {
     board = new StandardBoard();
     menu.classed("hidden", true);
