@@ -1,5 +1,12 @@
 body {
+    background: radial-gradient(ellipse at bottom 0 left 0, #ffcccc, #ffcccc00), radial-gradient(ellipse at bottom 0 right 0, #ffcccc, #ffcccc00), #ccccff;
+}
+
+html, body {
+    padding: 0;
     margin: 0;
+    height: 100%;
+    min-height: 100%;
 }
 
 * {
@@ -347,7 +354,7 @@ input:checked + .slider:before {
 
 .dark {
     filter: invert(100%);
-    background-color: #000000;
+    background: radial-gradient(ellipse at bottom 0 left 0, #003333, #00333300), radial-gradient(ellipse at bottom 0 right 0, #003333, #00333300), #333300;
 }
 
 .blind {
