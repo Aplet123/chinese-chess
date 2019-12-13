@@ -1,5 +1,7 @@
 body {
-    background: radial-gradient(ellipse at bottom 0 left 0, #ffcccc, #ffcccc00), radial-gradient(ellipse at bottom 0 right 0, #ffcccc, #ffcccc00), #ccccff;
+    background: radial-gradient(ellipse at bottom 0 left 0, #ffcccc, #ffcccc44,#ffcccc00) fixed, radial-gradient(ellipse at bottom 0 right 0, #ffcccc, #ffcccc44,#ffcccc00) fixed, #ccccff;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 html, body {
