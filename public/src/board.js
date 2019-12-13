@@ -239,11 +239,21 @@ class Board {
         this.arrowGroup = this.svg.append("g");
         this.pieceGroup = this.svg.append("g");
         this.moveGroup = this.svg.append("g");
-        this.tileGroup = this.boardGroup.append("g");
         this.selected = null;
         this.boardGroup.on("click", function() {
             cur.clearMoves();
         });
+
+        // fill for background
+        this.boardGroup.append("rect")
+            .attr("x", pad)
+            .attr("y", pad)
+            .attr("width", tileSide * width)
+            .attr("height", tileSide * height)
+            .classed("tile nostroke", true);
+
+        this.tileGroup = this.boardGroup.append("g");
+
         // generate tiles
         for (var i = 0; i < width; i ++) {
             for (var j = 0; j < height; j ++) {
