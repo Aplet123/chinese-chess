@@ -1,6 +1,8 @@
 const BoardManager = require("./BoardManager.js");
+const WebSocket = require("ws");
 const bm = new BoardManager();
 const serialize = require("./serialize.js");
+const expireTime = 1000 * 60 * 30;
 
 function connection (ws) {
     function sendInstruction(ins, v) {
@@ -11,6 +13,9 @@ function connection (ws) {
     }
     let key;
     ws.on("message", function (msg) {
+        if (ws.readyState == WebSocket.CLOSED || ws.readyState == WebSocket.CLOSING) {
+            return;
+        }
         let data;
         try {
             data = JSON.parse(msg);
@@ -26,7 +31,9 @@ function connection (ws) {
                 sendInstruction("JOINED", true);
                 bm.sendOther(key, "OP_JOINED");
                 sendInstruction("SIDE", bm.getSide(key));
-                sendInstruction("BOARD", serialize(bm.getBoard(key)));
+                if (bm.getBoard(key)) {
+                    sendInstruction("BOARD", serialize(bm.getBoard(key)));
+                }
                 sendInstruction("KEY", key);
                 sendInstruction("OTHERKEY", bm.getOtherKey(key));
             } else {
@@ -45,7 +52,9 @@ function connection (ws) {
                 if (data.v instanceof Array && data.v.length >= 4) {
                     data.v = data.v.map(v => parseInt(v, 10));
                     bm.move(key, data.v[0], data.v[1], data.v[2], data.v[3]);
-                    bm.sendAll(key, "BOARD", serialize(bm.getBoard(key)));
+                    if (bm.getBoard(key)) {
+                        bm.sendAll(key, "BOARD", serialize(bm.getBoard(key)));
+                    }
                 }
             }
         } else if (data.ins == "SENDCHAT") {
@@ -63,6 +72,7 @@ function connection (ws) {
                 let side = bm.getSide(key);
                 if (board && side) {
                     bm.sendAll(key, "WINCON", side + "_forfeit");
+                    bm.deleteBoard(board);
                 }
             }
         } else if (data.ins == "DRAW") {
@@ -80,6 +90,7 @@ function connection (ws) {
                     }
                     if (board.blackDraw && board.whiteDraw) {
                         bm.sendAll(key, "WINCON", "both_draw");
+                        bm.deleteBoard(board);
                     }
                 }
             }
@@ -95,5 +106,15 @@ function connection (ws) {
         this.alive =  true;
     });
 }
+
+setInterval(function () {
+    bm.boards.forEach(b => {
+        if (b.whitePlayer || b.blackPlayer) {
+            b.expires = Date.now() + expireTime;
+        } else if (Date.now() > b.expires) {
+            bm.deleteBoard(b);
+        }
+    });
+}, 10000);
 
 module.exports = connection;
