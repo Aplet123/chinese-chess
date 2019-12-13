@@ -357,7 +357,7 @@ input:checked + .slider:before {
 
 .dark {
     filter: invert(100%);
-    background: radial-gradient(ellipse at bottom 0 left 0, #003333, #00333300), radial-gradient(ellipse at bottom 0 right 0, #003333, #00333300), #333300;
+    background: radial-gradient(ellipse at bottom 0 left 0, #003333, #00333344,#00333300) fixed, radial-gradient(ellipse at bottom 0 right 0, #003333, #00333344,#00333300) fixed, #333300;
 }
 
 .blind {
