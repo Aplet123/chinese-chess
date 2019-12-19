@@ -55,6 +55,7 @@ svg {
     opacity: 0.5;
     stroke-width: 10px;
     stroke-linecap: round;
+    pointer-events: none;
 }
 
 .movetext {
