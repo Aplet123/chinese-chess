@@ -1,5 +1,5 @@
 const WebSocket = require("ws");
-const serialize = require("./serialize.js");
+const serialize = require("./util/serialize.js");
 
 function init (bm) {
     function connection(ws) {

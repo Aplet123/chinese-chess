@@ -149,6 +149,12 @@ class OnlineStandardBoard extends StandardBoard {
                 this.showDialog("Black has forfeited! White wins!", leavePage);
             } else if (data.v == "both_draw") {
                 this.showDialog("Players have agreed to a draw! Draw!", leavePage);
+            } else if (data.v == "white_threefold") {
+                this.showDialog("White has entered threefold repetition! Black wins!", leavePage);
+            } else if (data.v == "black_threefold") {
+                this.showDialog("Black has entered threefold repetition! White wins!", leavePage);
+            } else {
+                this.showDialog("Unknown win condition " + data.v, leavePage);
             }
         } else if (data.ins == "OP_DRAW") {
             this.displayMessage({
@@ -159,6 +165,12 @@ class OnlineStandardBoard extends StandardBoard {
             this.displayMessage({
                 italics: true,
                 message: "Draw offer has been cancelled."
+            });
+        } else if (data.ins == "REP_WARN") {
+            this.displayMessage({
+                italics: true,
+                title: "Warning",
+                message: "Position has been repeated. Achieving this position again will result in a loss."
             });
         }
     }

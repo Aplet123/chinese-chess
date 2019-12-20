@@ -1,5 +1,5 @@
 const Board = require("./Board.js");
-const pieces = require("./getPieces.js");
+const pieces = require("./util/getPieces.js");
 
 class StandardBoard extends Board {
     constructor() {

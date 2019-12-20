@@ -1,4 +1,4 @@
-const pieces = require("./getPieces.js");
+const pieces = require("./util/getPieces.js");
 
 class Board {
     constructor(w, h) {

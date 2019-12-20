@@ -37,7 +37,7 @@ function addSetting(name, text, resetF, setF, def) {
     settingDiv.append("p")
         .text(text);
     if (localStorage.getItem(name) !== null) {
-        input.property("checked", localStorage.getItem(name) == "true");
+        input.property("checked", localStorage.getItem(name) == (! def).toString());
         input.dispatch("change");
     }
 }
@@ -59,7 +59,7 @@ addSetting("dark", "dArK mOdE", function () {
 }, function () {
     d3.select("body").classed("dark", true);
 });
-var anims = true;
+var anims = false;
 addSetting("anims", "Animations", function () {
     anims = false;
 }, function () {

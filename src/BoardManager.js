@@ -1,5 +1,5 @@
 const StandardBoard = require("./StandardBoard.js");
-const serialize = require("./serialize.js");
+const { serialize, countBy, compareBoards } = require("./util/collective.js");
 
 const max = "100000";
 const expireTime = 1000 * 30; // shorter than the one in WSManager because new boards should not have long expire times
@@ -33,6 +33,7 @@ class BoardManager {
         newBoard.whiteDraw = false;
         newBoard.blackDraw = false;
         newBoard.expires = Date.now() + expireTime;
+        newBoard.history = [serialize(newBoard)];
         this.boards.push(newBoard);
         if (Math.random() < 0.5) {
             return newBoard.whiteKey;
@@ -126,7 +127,14 @@ class BoardManager {
                 }
                 board.whiteDraw = false;
                 board.blackDraw = false;
-                this.sendAll(key, "BOARD", serialize(this.getBoard(key)));
+                var serial = serialize(board);
+                board.history.push(serial);
+                if (countBy(board.history, v => compareBoards(v, serial)) >= 3) {
+                    this.sendAll(key, "WINCON", this.getSide(key) + "_threefold");
+                } else if (countBy(board.history, v => compareBoards(v, serial)) >= 2) {
+                    this.sendAll(key, "REP_WARN");
+                }
+                this.sendAll(key, "BOARD", serial);
                 this.sendOther(key, "LASTMOVE", [x0, y0, x1, y1]);
                 if (board.checkWhiteMate() == "checkmate") {
                     this.sendAll(key, "WINCON", "white_checkmate");

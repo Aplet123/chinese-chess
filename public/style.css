@@ -218,6 +218,7 @@ p.label {
     padding-left: 40px;
     margin-bottom: 5px;
     display: inline-block;
+    user-select: none;
 }
 
 nav button {
@@ -231,6 +232,7 @@ nav button {
     border-radius: 5px;
     cursor: pointer;
     box-sizing: border-box;
+    user-select: none;
 }
 
 nav div input {
@@ -240,6 +242,7 @@ nav div input {
     font-family: "Open Sans", sans-serif;
     margin-left: 10px;
     background: none;
+    user-select: none;
 }
 
 .nospace {
@@ -263,6 +266,7 @@ nav div input {
     font-family: "Open Sans", sans-serif;
     font-size: 18px;
     margin-left: 6px;
+    user-select: none;
 }
 
 .switch {
@@ -322,38 +326,6 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
-}
-
-.wpiece-icon-1 {
-    fill: #fedaa4;
-    stroke: #000;
-    stroke-width: 6.15px;
-}
-
-.wpiece-icon-1,
-.wpiece-icon-2,
-.wpiece-icon-3 {
-    stroke-linecap: round;
-}
-
-.wpiece-icon-1,
-.wpiece-icon-2 {
-    stroke-linejoin: bevel;
-}
-
-.wpiece-icon-2,
-.wpiece-icon-3 {
-    fill: none;
-    stroke: #c00;
-}
-
-.wpiece-icon-2 {
-    stroke-width: 6.87px;
-}
-
-.wpiece-icon-3 {
-    stroke-linejoin: round;
-    stroke-width: 4.17px;
 }
 
 .dark {
