@@ -63,9 +63,16 @@ class Piece {
             this.tag.on("click", function() {
                 cur.showMoves();
             });
+            this.tag.attr("href", this.def);
         }
-        this.tag.attr("href", this.def)
-            .attr("transform", `translate(${this.board.pad + this.x * this.board.tileSide}, ${this.board.pad + this.y * this.board.tileSide}) scale(${this.board.pieceRad / 100})`);
+        var end = `translate(${this.board.pad + this.x * this.board.tileSide} ${this.board.pad + this.y * this.board.tileSide}) scale(${this.board.pieceRad / 100})`;
+        if (anims && this.tag.attr("transform")) {
+            this.tag.transition()
+                .duration(200)
+                .attr("transform", end);
+        } else {
+            this.tag.attr("transform", end);
+        }
     }
 
     derender() {

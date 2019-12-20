@@ -12,9 +12,12 @@ function updateSetting(name, value) {
     localStorage.setItem(name, String(value));
 }
 
-function addSetting(name, text, resetF, setF) {
+function addSetting(name, text, resetF, setF, def) {
+    if (def === undefined) {
+        def = false;
+    }
     settings[name] = {
-        value: false,
+        value: def,
         resFunc: resetF,
         setFunc: setF
     };
@@ -25,6 +28,7 @@ function addSetting(name, text, resetF, setF) {
         .classed("switch", true);
     var input = settingLabel.append("input")
         .attr("type", "checkbox")
+        .property("checked", def)
         .on("change", function() {
             updateSetting(name, this.checked);
         });
@@ -54,4 +58,10 @@ addSetting("dark", "dArK mOdE", function () {
     d3.select("body").classed("dark", false);
 }, function () {
     d3.select("body").classed("dark", true);
+});
+var anims = true;
+addSetting("anims", "Animations", function () {
+    anims = false;
+}, function () {
+    anims = true;
 });

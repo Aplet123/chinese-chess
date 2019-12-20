@@ -18,13 +18,7 @@ var pieces = {
     BlackRook: BlackRook
 };
 
-function deserializeBoard(board, v) {
-    var data;
-    try {
-        data = JSON.parse(v);
-    } catch (err) {
-        return;
-    }
+function deserializeBoard(board, data) {
     board.turn = data.turn;
     board.coords = board.coords.map((arr, i) => arr.map((v, j) => {
         let k = data.state[i][j];

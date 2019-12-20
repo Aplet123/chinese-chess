@@ -77,7 +77,11 @@ class OnlineStandardBoard extends StandardBoard {
             }
             this.curKeyDisp.html(`Key to rejoin: <a href="#${escapeHTML(data.v)}">${escapeHTML(data.v)}</a>`);
         } else if (data.ins == "BOARD") {
-            deserializeBoard(this, data.v);
+            if (! anims) {
+                deserializeBoard(this, data.v);
+            } else {
+                this.cached = data.v;
+            }
             this.whiteKing.tag.classed("check", this.isWhiteCheck());
             this.blackKing.tag.classed("check", this.isBlackCheck());
         } else if (data.ins == "SIDE") {
@@ -99,6 +103,14 @@ class OnlineStandardBoard extends StandardBoard {
                 .attr("x2", data.v[2] * this.tileSide + this.pad)
                 .attr("y2", data.v[3] * this.tileSide + this.pad)
                 .classed("moveArrow", true);
+            if (anims) {
+                this.movePiece(this.coords[data.v[0]][data.v[1]], data.v[2], data.v[3]);
+                if (this.cached) {
+                    console.log(this.cached);
+                    deserializeBoard(this, this.cached);
+                }
+                this.cached = null;
+            }
         } else if (data.ins == "OP_JOINED") {
             this.displayMessage({
                 italics: true,

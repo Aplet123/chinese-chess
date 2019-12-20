@@ -1,4 +1,5 @@
 const StandardBoard = require("./StandardBoard.js");
+const serialize = require("./serialize.js");
 
 const max = "100000";
 const expireTime = 1000 * 30; // shorter than the one in WSManager because new boards should not have long expire times
@@ -125,6 +126,7 @@ class BoardManager {
                 }
                 board.whiteDraw = false;
                 board.blackDraw = false;
+                this.sendAll(key, "BOARD", serialize(this.getBoard(key)));
                 this.sendOther(key, "LASTMOVE", [x0, y0, x1, y1]);
                 if (board.checkWhiteMate() == "checkmate") {
                     this.sendAll(key, "WINCON", "white_checkmate");

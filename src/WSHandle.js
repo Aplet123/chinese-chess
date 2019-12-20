@@ -51,9 +51,6 @@ function init (bm) {
                     if (data.v instanceof Array && data.v.length >= 4) {
                         data.v = data.v.map(v => parseInt(v, 10));
                         bm.move(key, data.v[0], data.v[1], data.v[2], data.v[3]);
-                        if (bm.getBoard(key)) {
-                            bm.sendAll(key, "BOARD", serialize(bm.getBoard(key)));
-                        }
                     }
                 }
             } else if (data.ins == "SENDCHAT") {

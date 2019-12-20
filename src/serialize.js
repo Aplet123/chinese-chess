@@ -8,10 +8,10 @@ function serializePiece(piece) {
 }
 
 function serializeBoard(board) {
-    return JSON.stringify({
+    return {
         turn: board.turn,
         state: board.coords.map(arr => arr.map(v => serializePiece(v)))
-    });
+    };
 }
 
 module.exports = serializeBoard;
