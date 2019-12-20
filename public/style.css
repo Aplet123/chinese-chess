@@ -1,5 +1,5 @@
 body {
-    background: radial-gradient(ellipse at bottom 0 left 0, #ffcccc, #ffcccc44,#ffcccc00) fixed, radial-gradient(ellipse at bottom 0 right 0, #ffcccc, #ffcccc44,#ffcccc00) fixed, #ccccff;
+    background: radial-gradient(ellipse at bottom 0 left 0, #ffdddd, #ffdddd44,#ffdddd00) fixed, radial-gradient(ellipse at bottom 0 right 0, #ffdddd, #ffdddd44,#ffdddd00) fixed, #ddddff;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -222,7 +222,7 @@ p.label {
 
 nav button {
     border: none;
-    background-color: #8dff8c;
+    background-color: #37d491;
     font-family: "Open Sans", sans-serif;
     font-size: 20px;
     width: 300px;
@@ -358,7 +358,7 @@ input:checked + .slider:before {
 
 .dark {
     filter: invert(100%);
-    background: radial-gradient(ellipse at bottom 0 left 0, #003333, #00333344,#00333300) fixed, radial-gradient(ellipse at bottom 0 right 0, #003333, #00333344,#00333300) fixed, #333300;
+    background: radial-gradient(ellipse at bottom 0 left 0, #002222, #002222bb,#00222200) fixed, radial-gradient(ellipse at bottom 0 right 0, #002222, #002222bb,#00222200) fixed, #222200;
 }
 
 .blind {
