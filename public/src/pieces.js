@@ -66,7 +66,7 @@ class Piece {
             this.tag.attr("href", this.def);
         }
         var end = `translate(${this.board.pad + this.x * this.board.tileSide} ${this.board.pad + this.y * this.board.tileSide}) scale(${this.board.pieceRad / 100})`;
-        if (anims && this.tag.attr("transform")) {
+        if (settings.anims.value && this.tag.attr("transform")) {
             this.tag.transition()
                 .duration(200)
                 .attr("transform", end);
@@ -437,7 +437,7 @@ class WhiteKnight extends WhitePiece {
             if (this.y > 0) {
                 ret.push([this.x - 2, this.y - 1]);
             }
-            if (this.y < 9) {
+            if (this.y < this.board.height) {
                 ret.push([this.x - 2, this.y + 1]);
             }
         }
@@ -446,7 +446,7 @@ class WhiteKnight extends WhitePiece {
             if (this.y > 0) {
                 ret.push([this.x + 2, this.y - 1]);
             }
-            if (this.y < 9) {
+            if (this.y < this.board.height) {
                 ret.push([this.x + 2, this.y + 1]);
             }
         }
@@ -493,7 +493,7 @@ class BlackKnight extends BlackPiece {
             if (this.y > 0) {
                 ret.push([this.x + 2, this.y - 1]);
             }
-            if (this.y < this.board.width) {
+            if (this.y < this.board.height) {
                 ret.push([this.x + 2, this.y + 1]);
             }
         }

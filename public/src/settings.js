@@ -12,7 +12,13 @@ function updateSetting(name, value) {
     localStorage.setItem(name, String(value));
 }
 
-function addSetting(name, text, resetF, setF, def) {
+function addSetting(name, text, def, resetF, setF) {
+    if (!resetF) {
+        resetF = function () {};
+    }
+    if (!setF) {
+        setF = function () {};
+    }
     if (def === undefined) {
         def = false;
     }
@@ -43,25 +49,16 @@ function addSetting(name, text, resetF, setF, def) {
 }
 
 var suffix = "";
-addSetting("useicons", "Use icons", function () {
+addSetting("useicons", "Use icons", false, function () {
     suffix = "";
 }, function () {
     suffix = "_icon";
 });
 var blindfolded = false;
-addSetting("blindfold", "Play blindfolded", function () {
-    blindfolded = false;
-}, function () {
-    blindfolded = true;
-});
-addSetting("dark", "dArK mOdE", function () {
+addSetting("blindfold", "Play blindfolded");
+addSetting("dark", "dArK mOdE", false, function () {
     d3.select("body").classed("dark", false);
 }, function () {
     d3.select("body").classed("dark", true);
 });
-var anims = false;
-addSetting("anims", "Animations", function () {
-    anims = false;
-}, function () {
-    anims = true;
-});
+addSetting("anims", "Animations", true);

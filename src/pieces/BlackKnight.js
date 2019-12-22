@@ -39,7 +39,7 @@ class BlackKnight extends BlackPiece {
             if (this.y > 0) {
                 ret.push([this.x + 2, this.y - 1]);
             }
-            if (this.y < this.board.width) {
+            if (this.y < this.board.height) {
                 ret.push([this.x + 2, this.y + 1]);
             }
         }

@@ -64,7 +64,7 @@ class BoardManager {
         if (board) {
             if (key == board.whiteKey) {
                 return "white";
-            } else {
+            } else if (key == board.blackKey) {
                 return "black";
             }
         }
@@ -76,7 +76,7 @@ class BoardManager {
         let side = this.getSide(key);
         if (board && side && side == "white") {
            return board.blackKey;
-        } else if (board && side && side == "black" ){
+        } else if (board && side && side == "black"){
             return board.whiteKey;
         }
     }
@@ -87,7 +87,7 @@ class BoardManager {
         if (side == "white") {
             board.whitePlayer = true;
             board.whiteWS = ws;
-        } else if (side == "black" ){
+        } else if (side == "black"){
             board.blackPlayer = true;
             board.blackWS = ws;
         }
@@ -99,7 +99,7 @@ class BoardManager {
         if (board && side == "white") {
             board.whitePlayer = false;
             board.whiteWS = null;
-        } else if (board && side == "black" ){
+        } else if (board && side == "black"){
             board.blackPlayer = false;
             board.blackWS = null;
         }
@@ -110,7 +110,7 @@ class BoardManager {
         let side = this.getSide(key);
         if (board && side && side == "white") {
             return !board.whitePlayer;
-        } else if (board && side && side == "black" ) {
+        } else if (board && side && side == "black") {
             return !board.blackPlayer;
         }
         return false;

@@ -77,7 +77,7 @@ class OnlineStandardBoard extends StandardBoard {
             }
             this.curKeyDisp.html(`Key to rejoin: <a href="#${escapeHTML(data.v)}">${escapeHTML(data.v)}</a>`);
         } else if (data.ins == "BOARD") {
-            if (! anims) {
+            if (!settings.anims.value) {
                 deserializeBoard(this, data.v);
             } else {
                 this.cached = data.v;
@@ -103,7 +103,7 @@ class OnlineStandardBoard extends StandardBoard {
                 .attr("x2", data.v[2] * this.tileSide + this.pad)
                 .attr("y2", data.v[3] * this.tileSide + this.pad)
                 .classed("moveArrow", true);
-            if (anims) {
+            if (settings.anims.value) {
                 this.movePiece(this.coords[data.v[0]][data.v[1]], data.v[2], data.v[3]);
                 if (this.cached) {
                     console.log(this.cached);

@@ -311,7 +311,7 @@ class Board {
         window.onbeforeunload = function() {
             return "yes";
         };
-        if (blindfolded) {
+        if (settings.blindfold.value) {
             this.pieceGroup.classed("blind", true);
             this.moveGroup.classed("blind", true);
         }
