@@ -87,12 +87,12 @@ class Board {
                 isLoS = false;
             }
         }
+        if (this.whiteKing.x != this.blackKing.x) {
+            isLoS = false;
+        }
         this.movePieceSilent(piece, origX, origY);
         if (insert) {
             this.coords[move[0]][move[1]] = insert;
-        }
-        if (this.whiteKing.x != this.blackKing.x) {
-            return false;
         }
         return isLoS;
     }
