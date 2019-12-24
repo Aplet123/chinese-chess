@@ -43,7 +43,7 @@ function addSetting(name, text, def, resetF, setF) {
     settingDiv.append("p")
         .text(text);
     if (localStorage.getItem(name) !== null) {
-        input.property("checked", localStorage.getItem(name) == (! def).toString());
+        input.property("checked", localStorage.getItem(name));
         input.dispatch("change");
     }
 }
