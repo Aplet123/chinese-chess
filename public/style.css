@@ -1,5 +1,5 @@
 body {
-    background: radial-gradient(ellipse at bottom 0 left 0, #ffdddd, #ffdddd44,#ffdddd00) fixed, radial-gradient(ellipse at bottom 0 right 0, #ffdddd, #ffdddd44,#ffdddd00) fixed, #ddddff;
+    background-color: #e0e0e0;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -226,7 +226,7 @@ nav button {
     background-color: #37d491;
     font-family: "Open Sans", sans-serif;
     font-size: 20px;
-    width: 300px;
+    width: 250px;
     flex-shrink: 1;
     margin-bottom: 5px;
     border-radius: 5px;
@@ -330,7 +330,7 @@ input:checked + .slider:before {
 
 .dark {
     filter: invert(100%);
-    background: radial-gradient(ellipse at bottom 0 left 0, #002222, #002222bb,#00222200) fixed, radial-gradient(ellipse at bottom 0 right 0, #002222, #002222bb,#00222200) fixed, #222200;
+    background: #1f1f1f;
 }
 
 .blind {
