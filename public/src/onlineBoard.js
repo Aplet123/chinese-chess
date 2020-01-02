@@ -9,12 +9,13 @@ class OnlineBoard extends Board {
     render() {
         super.render();
         this.sidebar = this.flexParent.append("div").classed("sidebar", true);
-        this.curKeyDisp = this.sidebar.append("p");
-        this.otherKeyDisp = this.sidebar.append("p");
+        this.curKeyDisp = this.sidebar.append("p").html(`Key to rejoin: <a href="#${escapeHTML(this.rejoinKey)}">${escapeHTML(this.rejoinKey)}</a>`);
+        this.otherKeyDisp = this.sidebar.append("p").html(`Key to invite friend: <a href="#${escapeHTML(this.otherKey)}">${escapeHTML(this.otherKey)}</a>`);
         this.chat = this.sidebar.append("div").classed("chat", true);
         this.chatMesses = this.chat.append("div");
         this.chatInput = this.chat.append("input")
             .attr("placeholder", "Send chat message here...");
+        this.updateMovetext();
         var cur = this;
         this.chatInput.on("keydown", function() {
             if (d3.event.code == "Enter") {
@@ -79,26 +80,33 @@ class OnlineBoard extends Board {
             if (!this.joined) {
                 this.sendInstruction("JOIN", data.v);
             }
-            this.curKeyDisp.html(`Key to rejoin: <a href="#${escapeHTML(data.v)}">${escapeHTML(data.v)}</a>`);
+            this.rejoinKey = data.v;
         } else if (data.ins == "BOARD") {
             if (!settings.anims.value) {
                 deserializeBoard(this, data.v);
             } else {
                 this.cached = data.v;
             }
-            this.whiteKing.tag.classed("check", this.isWhiteCheck());
-            this.blackKing.tag.classed("check", this.isBlackCheck());
+            if (this.rendered) {
+                this.whiteKing.tag.classed("check", this.isWhiteCheck());
+                this.blackKing.tag.classed("check", this.isBlackCheck());
+            }
         } else if (data.ins == "SIDE") {
             this.side = data.v;
             this.updateMovetext();
         } else if (data.ins == "JOINED") {
             if (data.v) {
                 this.joined = true;
+                if (this.side == "black" && settings.flip.value) {
+                    this.shouldFlip = true;
+                }
+                this.render();
             } else {
+                this.render();
                 this.showDialog("Error joining, key is likely wrong", leavePage);
             }
         } else if (data.ins == "OTHERKEY") {
-            this.otherKeyDisp.html(`Key to invite friend: <a href="#${escapeHTML(data.v)}">${escapeHTML(data.v)}</a>`);
+            this.otherKey = data.v;
         } else if (data.ins == "LASTMOVE") {
             this.arrowGroup.html("");
             this.arrowGroup.append("line")
@@ -250,6 +258,9 @@ class OnlineStandardBoard extends OnlineBoard {
     }
 
     updateMovetext() {
+        if (! this.rendered) {
+            return;
+        }
         if (this.turn == "white") {
             this.movetext.text(`You are ${this.side}. White to move.`);
         } else if (this.turn == "black") {

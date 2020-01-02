@@ -4,6 +4,8 @@ class Board {
             throw new Error("Cannot construct abstract class Board");
         }
         this.coords = new Array(w).fill(0).map(v => new Array(h).fill(null));
+        this.shouldFlip = false;
+        this.rendered = false;
     }
     
     getPieces() {
@@ -29,7 +31,7 @@ class Board {
     }
 
     scaleY(coord) {
-        if (settings.flip.value && this instanceof OnlineBoard) {
+        if (this.shouldFlip) {
             return (this.height - coord) * this.tileSide + this.pad;
         }
         return coord * this.tileSide + this.pad;
@@ -231,6 +233,9 @@ class Board {
     }
 
     render() {
+        if (this.rendered) {
+            return;
+        }
         var cur = this;
         this.flexParent = d3.select("body").append("div").classed("flex", true);
         this.svg = this.flexParent.append("svg");
@@ -273,7 +278,7 @@ class Board {
             for (var j = 0; j < this.height; j ++) {
                 var tile = this.tileGroup.append("rect")
                     .attr("x", this.scaleX(i))
-                    .attr("y", this.scaleY((settings.flip.value && this instanceof OnlineBoard) ? (j + 1) : j))
+                    .attr("y", this.scaleY(this.shouldFlip ? (j + 1) : j))
                     .attr("width", this.tileSide)
                     .attr("height", this.tileSide)
                     .classed("tile normalstroke", true);
@@ -333,6 +338,7 @@ class Board {
             this.pieceGroup.classed("blind", true);
             this.moveGroup.classed("blind", true);
         }
+        this.rendered = true;
     }
 }
 

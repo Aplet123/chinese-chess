@@ -27,14 +27,13 @@ function init (bm) {
                 if (bm.isAvailable(data.v)) {
                     key = data.v;
                     bm.join(key, ws);
-                    sendInstruction("JOINED", true);
-                    bm.sendOther(key, "OP_JOINED");
                     sendInstruction("SIDE", bm.getSide(key));
                     if (bm.getBoard(key)) {
                         sendInstruction("BOARD", serialize(bm.getBoard(key)));
                     }
-                    sendInstruction("KEY", key);
                     sendInstruction("OTHERKEY", bm.getOtherKey(key));
+                    sendInstruction("JOINED", true);
+                    bm.sendOther(key, "OP_JOINED");
                 } else {
                     sendInstruction("JOINED", false);
                 }
