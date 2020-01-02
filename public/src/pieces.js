@@ -26,8 +26,8 @@ class Piece {
             moves.map(v => {
                 this.board.moveGroup.append("circle")
                     .classed("moveIndicator", true)
-                    .attr("cx", v[0] * this.board.tileSide + this.board.pad)
-                    .attr("cy", v[1] * this.board.tileSide + this.board.pad)
+                    .attr("cx", this.board.scaleX(v[0]))
+                    .attr("cy", this.board.scaleY(v[1]))
                     .attr("r", this.board.pieceRad)
                     .on("click", function() {
                         cur.board.clearMoves();
@@ -41,8 +41,8 @@ class Piece {
             moves.map(v => {
                 this.board.moveGroup.append("circle")
                     .classed("moveIndicatorGrey", true)
-                    .attr("cx", v[0] * this.board.tileSide + this.board.pad)
-                    .attr("cy", v[1] * this.board.tileSide + this.board.pad)
+                    .attr("cx", this.board.scaleX(v[0]))
+                    .attr("cy", this.board.scaleY(v[1]))
                     .attr("r", this.board.pieceRad)
                     .on("click", function() {
                         cur.board.clearMoves();
@@ -65,7 +65,7 @@ class Piece {
             });
             this.tag.attr("href", this.def);
         }
-        var end = `translate(${this.board.pad + this.x * this.board.tileSide} ${this.board.pad + this.y * this.board.tileSide}) scale(${this.board.pieceRad / 100})`;
+        var end = `translate(${this.board.scaleX(this.x)} ${this.board.scaleY(this.y)}) scale(${this.board.pieceRad / 100})`;
         if (settings.anims.value && this.tag.attr("transform")) {
             this.tag.transition()
                 .duration(200)

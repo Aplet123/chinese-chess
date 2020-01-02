@@ -8,7 +8,7 @@ class Board {
         this.coords = new Array(w).fill(0).map(v => new Array(h).fill(null));
     }
 
-    render(width, height, pad, tileSide, pieceRad, river, crossX, crossY, crossWidth, crossHeight) {
+    config(width, height, pad, tileSide, pieceRad, river, crossX, crossY, crossWidth, crossHeight) {
         this.width = width;
         this.height = height;
         this.pad = pad;

@@ -43,7 +43,7 @@ function addSetting(name, text, def, resetF, setF) {
     settingDiv.append("p")
         .text(text);
     if (localStorage.getItem(name) !== null) {
-        input.property("checked", localStorage.getItem(name) == (! def).toString());
+        input.property("checked", localStorage.getItem(name) == "true");
         input.dispatch("change");
     }
 }
@@ -62,3 +62,4 @@ addSetting("dark", "dArK mOdE", false, function () {
     d3.select("body").classed("dark", true);
 });
 addSetting("anims", "Animations", true);
+addSetting("flip", "Flip for black", true);

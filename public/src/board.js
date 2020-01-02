@@ -21,8 +21,18 @@ class Board {
     addPiece(pieceType, x, y) {
         var newPiece = new pieceType(x, y, this);
         this.coords[x][y] = newPiece;
-        newPiece.render();
         return newPiece;
+    }
+
+    scaleX(coord) {
+        return coord * this.tileSide + this.pad;
+    }
+
+    scaleY(coord) {
+        if (settings.flip.value && this instanceof OnlineBoard) {
+            return (this.height - coord) * this.tileSide + this.pad;
+        }
+        return coord * this.tileSide + this.pad;
     }
 
     movePiece(piece, x, y) {
@@ -31,13 +41,13 @@ class Board {
             this.removePiece(this.coords[x][y]);
         }
         this.arrowGroup.html("");
-        this.arrowGroup.append("line")
-            .attr("x1", piece.x * this.tileSide + this.pad)
-            .attr("y1", piece.y * this.tileSide + this.pad)
-            .attr("x2", x * this.tileSide + this.pad)
-            .attr("y2", y * this.tileSide + this.pad)
-            .classed("moveArrow", true);
         piece.move(x, y);
+        this.arrowGroup.append("line")
+            .attr("x1", this.scaleX(piece.x))
+            .attr("y1", this.scaleY(piece.y))
+            .attr("x2", this.scaleX(x))
+            .attr("y2", this.scaleY(y))
+            .classed("moveArrow", true);
         this.coords[x][y] = piece;
         piece.render();
         this.checkWinCon();
@@ -127,19 +137,19 @@ class Board {
     }
 
     isValidMove(piece, move) {
-        if(piece instanceof WhitePiece) {
+        if (piece instanceof WhitePiece) {
             return (!this.checkLineOfSight(piece, move)) && (!this.isWhiteCheck(piece, move));
         }
-        if(piece instanceof BlackPiece) {
+        if (piece instanceof BlackPiece) {
             return (!this.checkLineOfSight(piece, move)) && (!this.isBlackCheck(piece, move));
         }
     }
 
     isValidMoveNoCheck(piece, move) {
-        if(piece instanceof WhitePiece) {
+        if (piece instanceof WhitePiece) {
             return !this.checkLineOfSight(piece, move);
         }
-        if(piece instanceof BlackPiece) {
+        if (piece instanceof BlackPiece) {
             return !this.checkLineOfSight(piece, move);
         }
     }
@@ -206,8 +216,7 @@ class Board {
         }
     }
 
-    render(width, height, pad, tileSide, pieceRad, river, crossX, crossY, crossWidth, crossHeight, viewbox) {
-        var cur = this;
+    config(width, height, pad, tileSide, pieceRad, river, crossX, crossY, crossWidth, crossHeight, viewbox) {
         this.width = width;
         this.height = height;
         this.pad = pad;
@@ -218,9 +227,14 @@ class Board {
         this.crossY = crossY;
         this.crossWidth = crossWidth;
         this.crossHeight = crossHeight;
+        this.viewbox = viewbox;
+    }
+
+    render() {
+        var cur = this;
         this.flexParent = d3.select("body").append("div").classed("flex", true);
         this.svg = this.flexParent.append("svg");
-        this.svg.attr("viewBox", viewbox)
+        this.svg.attr("viewBox", this.viewbox)
             .attr("preserveAspectRatio", "xMidYMid meet");
         this.dialogBase = this.flexParent.append("div")
             .classed("dialogBase hidden", true);
@@ -246,24 +260,24 @@ class Board {
 
         // fill for background
         this.boardGroup.append("rect")
-            .attr("x", pad)
-            .attr("y", pad)
-            .attr("width", tileSide * width)
-            .attr("height", tileSide * height)
+            .attr("x", this.pad)
+            .attr("y", this.pad)
+            .attr("width", this.tileSide * this.width)
+            .attr("height", this.tileSide * this.height)
             .classed("tile nostroke", true);
 
         this.tileGroup = this.boardGroup.append("g");
 
         // generate tiles
-        for (var i = 0; i < width; i ++) {
-            for (var j = 0; j < height; j ++) {
+        for (var i = 0; i < this.width; i ++) {
+            for (var j = 0; j < this.height; j ++) {
                 var tile = this.tileGroup.append("rect")
-                    .attr("x", pad + tileSide * i)
-                    .attr("y", pad + tileSide * j)
-                    .attr("width", tileSide)
-                    .attr("height", tileSide)
+                    .attr("x", this.scaleX(i))
+                    .attr("y", this.scaleY((settings.flip.value && this instanceof OnlineBoard) ? (j + 1) : j))
+                    .attr("width", this.tileSide)
+                    .attr("height", this.tileSide)
                     .classed("tile normalstroke", true);
-                if (j == river) {
+                if (j == this.river) {
                     tile.classed("nostroke", true);
                     tile.lower();
                 }
@@ -271,42 +285,46 @@ class Board {
         }
         // extra thick border around the whole board
         this.boardGroup.append("rect")
-            .attr("x", pad)
-            .attr("y", pad)
-            .attr("width", tileSide * width)
-            .attr("height", tileSide * height)
+            .attr("x", this.pad)
+            .attr("y", this.pad)
+            .attr("width", this.tileSide * this.width)
+            .attr("height", this.tileSide * this.height)
             .attr("fill", "transparent")
             .classed("thickstroke", true);
 
         // make the two "x"s
         this.boardGroup.append("line")
-            .attr("x1", pad + tileSide * crossX)
-            .attr("y1", pad + tileSide * crossY)
-            .attr("x2", pad + tileSide * (crossX + crossWidth))
-            .attr("y2", pad + tileSide * (crossY + crossHeight))
+            .attr("x1", this.scaleX(this.crossX))
+            .attr("y1", this.scaleY(this.crossY))
+            .attr("x2", this.scaleX(this.crossX + this.crossWidth))
+            .attr("y2", this.scaleY(this.crossY + this.crossHeight))
             .classed("normalstroke", true);
         this.boardGroup.append("line")
-            .attr("x1", pad + tileSide * (crossX + crossWidth))
-            .attr("y1", pad + tileSide * crossY)
-            .attr("x2", pad + tileSide * crossX)
-            .attr("y2", pad + tileSide * (crossY + crossHeight))
+            .attr("x1", this.scaleX(this.crossX + this.crossWidth))
+            .attr("y1", this.scaleY(this.crossY))
+            .attr("x2",this.scaleX(this.crossX))
+            .attr("y2", this.scaleY(this.crossY + this.crossHeight))
             .classed("normalstroke", true);
         this.boardGroup.append("line")
-            .attr("x1", pad + tileSide * crossX)
-            .attr("y1", pad + tileSide * (height - crossY - crossHeight))
-            .attr("x2", pad + tileSide * (crossX + crossWidth))
-            .attr("y2", pad + tileSide * (height - crossY))
+            .attr("x1", this.scaleX(this.crossX))
+            .attr("y1", this.scaleY(this.height - this.crossY - this.crossHeight))
+            .attr("x2", this.scaleX(this.crossX + this.crossWidth))
+            .attr("y2", this.scaleY(this.height - this.crossY))
             .classed("normalstroke", true);
         this.boardGroup.append("line")
-            .attr("x1", pad + tileSide * (crossX + crossWidth))
-            .attr("y1", pad + tileSide * (height - crossY - crossHeight))
-            .attr("x2", pad + tileSide * crossX)
-            .attr("y2", pad + tileSide * (height - crossY))
+            .attr("x1", this.scaleX(this.crossX + this.crossWidth))
+            .attr("y1", this.scaleY(this.height - this.crossY - this.crossHeight))
+            .attr("x2", this.scaleX(this.crossX))
+            .attr("y2", this.scaleY(this.height - this.crossY))
             .classed("normalstroke", true);
         this.movetext = this.boardGroup.append("text")
-            .attr("x", pad)
-            .attr("y", 2 * pad + tileSide * height + 50)
+            .attr("x", this.pad)
+            .attr("y", 2 * this.pad + this.tileSide * this.height + 50)
             .classed("movetext", true);
+        var pieces = this.getPieces();
+        for (var i = 0; i < pieces.length; i ++) {
+            pieces[i].render();
+        }
         this.updateMovetext();
         window.onbeforeunload = function() {
             return "yes";
@@ -322,7 +340,7 @@ class StandardBoard extends Board {
     constructor() {
         super(9, 10);
         this.turn = "white";
-        this.render(8, 9, 30, 60, 23, 4, 3, 0, 2, 2, "0 0 600 700");
+        this.config(8, 9, 30, 60, 23, 4, 3, 0, 2, 2, "0 0 600 700");
         this.addPiece(WhitePawn, 0, 6);
         this.addPiece(WhitePawn, 2, 6);
         this.addPiece(WhitePawn, 4, 6);

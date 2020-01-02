@@ -1,9 +1,13 @@
-class OnlineStandardBoard extends StandardBoard {
-    constructor(ws) {
-        super();
+class OnlineBoard extends Board {
+    constructor(w, h, ws) {
+        super(w, h);
         this.ws = ws;
         this.joined = false;
         ws.addEventListener("message", this.handleMessage.bind(this));
+    }
+
+    render() {
+        super.render();
         this.sidebar = this.flexParent.append("div").classed("sidebar", true);
         this.curKeyDisp = this.sidebar.append("p");
         this.otherKeyDisp = this.sidebar.append("p");
@@ -98,10 +102,10 @@ class OnlineStandardBoard extends StandardBoard {
         } else if (data.ins == "LASTMOVE") {
             this.arrowGroup.html("");
             this.arrowGroup.append("line")
-                .attr("x1", data.v[0] * this.tileSide + this.pad)
-                .attr("y1", data.v[1] * this.tileSide + this.pad)
-                .attr("x2", data.v[2] * this.tileSide + this.pad)
-                .attr("y2", data.v[3] * this.tileSide + this.pad)
+                .attr("x1", this.scaleX(data.v[0]))
+                .attr("y1", this.scaleY(data.v[1]))
+                .attr("x2", this.scaleX(data.v[2]))
+                .attr("y2", this.scaleY(data.v[3]))
                 .classed("moveArrow", true);
             if (settings.anims.value) {
                 this.movePiece(this.coords[data.v[0]][data.v[1]], data.v[2], data.v[3]);
@@ -191,15 +195,65 @@ class OnlineStandardBoard extends StandardBoard {
         super.movePiece(piece, x, y);
     }
 
+    checkWinCon() {
+        // do nothing
+    }
+}
+
+class OnlineStandardBoard extends OnlineBoard {
+    constructor(ws) {
+        super(9, 10, ws);
+        this.turn = "white";
+        this.config(8, 9, 30, 60, 23, 4, 3, 0, 2, 2, "0 0 600 700");
+        this.addPiece(WhitePawn, 0, 6);
+        this.addPiece(WhitePawn, 2, 6);
+        this.addPiece(WhitePawn, 4, 6);
+        this.addPiece(WhitePawn, 6, 6);
+        this.addPiece(WhitePawn, 8, 6);
+        this.addPiece(BlackPawn, 0, 3);
+        this.addPiece(BlackPawn, 2, 3);
+        this.addPiece(BlackPawn, 4, 3);
+        this.addPiece(BlackPawn, 6, 3);
+        this.addPiece(BlackPawn, 8, 3);
+        this.addPiece(WhiteCannon, 1, 7);
+        this.addPiece(WhiteCannon, 7, 7);
+        this.addPiece(BlackCannon, 1, 2);
+        this.addPiece(BlackCannon, 7, 2);
+        this.addPiece(WhiteRook, 0, 9);
+        this.addPiece(WhiteRook, 8, 9);
+        this.addPiece(BlackRook, 0, 0);
+        this.addPiece(BlackRook, 8, 0);
+        this.addPiece(WhiteKnight, 1, 9);
+        this.addPiece(WhiteKnight, 7, 9);
+        this.addPiece(BlackKnight, 1, 0);
+        this.addPiece(BlackKnight, 7, 0);
+        this.addPiece(WhiteElephant, 2, 9);
+        this.addPiece(WhiteElephant, 6, 9);
+        this.addPiece(BlackElephant, 2, 0);
+        this.addPiece(BlackElephant, 6, 0);
+        this.addPiece(WhiteGuard, 3, 9);
+        this.addPiece(WhiteGuard, 5, 9);
+        this.addPiece(BlackGuard, 3, 0);
+        this.addPiece(BlackGuard, 5, 0);
+        this.whiteKing = this.addPiece(WhiteKing, 4, 9);
+        this.blackKing = this.addPiece(BlackKing, 4, 0);
+    }
+
+    movePiece(piece, x, y) {
+        super.movePiece(piece, x, y);
+        if (this.turn == "white") {
+            this.turn = "black";
+        } else {
+            this.turn = "white";
+        }
+        this.updateMovetext();
+    }
+
     updateMovetext() {
         if (this.turn == "white") {
             this.movetext.text(`You are ${this.side}. White to move.`);
         } else if (this.turn == "black") {
             this.movetext.text(`You are ${this.side}. Black to move.`);
         }
-    }
-
-    checkWinCon() {
-        // do nothing
     }
 }
