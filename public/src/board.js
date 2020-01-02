@@ -43,13 +43,13 @@ class Board {
             this.removePiece(this.coords[x][y]);
         }
         this.arrowGroup.html("");
-        piece.move(x, y);
         this.arrowGroup.append("line")
             .attr("x1", this.scaleX(piece.x))
             .attr("y1", this.scaleY(piece.y))
             .attr("x2", this.scaleX(x))
             .attr("y2", this.scaleY(y))
             .classed("moveArrow", true);
+        piece.move(x, y);
         this.coords[x][y] = piece;
         piece.render();
         this.checkWinCon();
