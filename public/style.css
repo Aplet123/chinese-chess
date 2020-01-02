@@ -243,6 +243,7 @@ nav div input {
     margin-left: 10px;
     background: none;
     user-select: none;
+    width: 150px;
 }
 
 .nospace {
