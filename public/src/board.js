@@ -331,9 +331,11 @@ class Board {
             pieces[i].render();
         }
         this.updateMovetext();
-        window.onbeforeunload = function() {
-            return "yes";
-        };
+        if (settings.promptclose.value) {
+            window.onbeforeunload = function () {
+                return "yes";
+            };
+        }
         if (settings.blindfold.value) {
             this.pieceGroup.classed("blind", true);
             this.moveGroup.classed("blind", true);

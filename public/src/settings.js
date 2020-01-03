@@ -63,3 +63,4 @@ addSetting("dark", "dArK mOdE", false, function () {
 });
 addSetting("anims", "Animations", true);
 addSetting("flip", "Flip for black", true);
+addSetting("promptclose", "Prompt before close", false);
