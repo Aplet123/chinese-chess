@@ -32,6 +32,7 @@ function init (bm) {
                         sendInstruction("BOARD", serialize(bm.getBoard(key)));
                     }
                     sendInstruction("OTHERKEY", bm.getOtherKey(key));
+                    sendInstruction("SPECKEY", bm.getSpecKey(key));
                     sendInstruction("JOINED", true);
                     bm.sendOther(key, "OP_JOINED");
                 } else {

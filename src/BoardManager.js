@@ -28,8 +28,10 @@ class BoardManager {
         newBoard.blackPlayer = false;
         newBoard.whiteKey = this.genKey();
         newBoard.blackKey = this.genKey();
+        newBoard.specKey = this.genKey();
         newBoard.whiteWS = null;
         newBoard.blackWS = null;
+        newBoard.specWS = [];
         newBoard.whiteDraw = false;
         newBoard.blackDraw = false;
         newBoard.expires = Date.now() + expireTime;
@@ -56,7 +58,7 @@ class BoardManager {
     }
 
     getBoard(key) {
-        return this.boards.find(v => v.whiteKey == key || v.blackKey == key);
+        return this.boards.find(v => v.whiteKey == key || v.blackKey == key || v.specKey == key);
     }
 
     getSide(key) {
@@ -66,6 +68,8 @@ class BoardManager {
                 return "white";
             } else if (key == board.blackKey) {
                 return "black";
+            } else if (key == board.specKey) {
+                return "spectator";
             }
         }
         return null;
@@ -76,8 +80,17 @@ class BoardManager {
         let side = this.getSide(key);
         if (board && side && side == "white") {
            return board.blackKey;
-        } else if (board && side && side == "black"){
+        } else if (board && side && side == "black") {
             return board.whiteKey;
+        } else if (board && side && side == "spectator") {
+            return board.specKey;
+        }
+    }
+
+    getSpecKey(key) {
+        let board = this.getBoard(key);
+        if (board) {
+            return board.specKey;
         }
     }
 
@@ -90,18 +103,23 @@ class BoardManager {
         } else if (side == "black"){
             board.blackPlayer = true;
             board.blackWS = ws;
+        } else if (side == "spectator") {
+            board.specWS.push(ws);
         }
     }
 
     leave(key) {
         let board = this.getBoard(key);
         let side = this.getSide(key);
-        if (board && side == "white") {
+        if (board && side && side == "white") {
             board.whitePlayer = false;
             board.whiteWS = null;
-        } else if (board && side == "black"){
+        } else if (board && side && side == "black") {
             board.blackPlayer = false;
             board.blackWS = null;
+        } else if (board && side && side == "spectator") {
+            // for spectators key is expected to be the actual ws
+            board.specWS.splice(board.specWS.indexOf(key), 1);
         }
     }
 
@@ -109,9 +127,11 @@ class BoardManager {
         let board = this.getBoard(key);
         let side = this.getSide(key);
         if (board && side && side == "white") {
-            return !board.whitePlayer;
+            return ! board.whitePlayer;
         } else if (board && side && side == "black") {
-            return !board.blackPlayer;
+            return ! board.blackPlayer;
+        } else if (board && side && side == "spectator") {
+            return true;
         }
         return false;
     }
@@ -174,6 +194,14 @@ class BoardManager {
                 v
             }));
         }
+        if (side == "spectator") {
+            for (var i = 0; i < board.specWS.length; i ++) {
+                board.specWS[i].send(JSON.stringify({
+                    ins,
+                    v
+                }));
+            }
+        }
     }
 
     sendOther(key, ins, v) {
@@ -182,6 +210,7 @@ class BoardManager {
             return;
         }
         this.sendTo(key, ins, v);
+        this.sendTo(this.getSpecKey(key), ins, v);
     }
 
     sendAll(key, ins, v) {

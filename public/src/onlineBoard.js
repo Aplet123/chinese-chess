@@ -11,6 +11,7 @@ class OnlineBoard extends Board {
         this.sidebar = this.flexParent.append("div").classed("sidebar", true);
         this.curKeyDisp = this.sidebar.append("p").html(`Key to rejoin: <a href="#${escapeHTML(this.rejoinKey)}">${escapeHTML(this.rejoinKey)}</a>`);
         this.otherKeyDisp = this.sidebar.append("p").html(`Key to invite friend: <a href="#${escapeHTML(this.otherKey)}">${escapeHTML(this.otherKey)}</a>`);
+        this.specKeyDisp = this.sidebar.append("p").html(`Key to spectate: <a href="#${escapeHTML(this.specKey)}">${escapeHTML(this.specKey)}</a>`);
         this.chat = this.sidebar.append("div").classed("chat", true);
         this.chatMesses = this.chat.append("div");
         this.chatInput = this.chat.append("input")
@@ -107,6 +108,8 @@ class OnlineBoard extends Board {
             }
         } else if (data.ins == "OTHERKEY") {
             this.otherKey = data.v;
+        } else if (data.ins == "SPECKEY") {
+            this.specKey = data.v;
         } else if (data.ins == "LASTMOVE") {
             this.arrowGroup.html("");
             this.arrowGroup.append("line")
