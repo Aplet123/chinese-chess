@@ -158,16 +158,12 @@ class BoardManager {
                 this.sendOther(key, "LASTMOVE", [x0, y0, x1, y1]);
                 if (board.checkWhiteMate() == "checkmate") {
                     this.sendAll(key, "WINCON", "white_checkmate");
-                    this.deleteBoard(board);
                 } else if (board.checkWhiteMate() == "stalemate") {
                     this.sendAll(key, "WINCON", "white_stalemate");
-                    this.deleteBoard(board);
                 } else if (board.checkBlackMate() == "checkmate") {
                     this.sendAll(key, "WINCON", "black_checkmate");
-                    this.deleteBoard(board);
                 } else if (board.checkBlackMate() == "stalemate") {
                     this.sendAll(key, "WINCON", "black_stalemate");
-                    this.deleteBoard(board);
                 }
             }
         }

@@ -68,7 +68,6 @@ function init (bm) {
                     let side = bm.getSide(key);
                     if (board && side) {
                         bm.sendAll(key, "WINCON", side + "_forfeit");
-                        bm.deleteBoard(board);
                     }
                 }
             } else if (data.ins == "DRAW") {

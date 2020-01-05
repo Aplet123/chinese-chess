@@ -9,9 +9,9 @@ class OnlineBoard extends Board {
     render() {
         super.render();
         this.sidebar = this.flexParent.append("div").classed("sidebar", true);
-        this.curKeyDisp = this.sidebar.append("p").html(`Key to rejoin: <a href="#${escapeHTML(this.rejoinKey)}">${escapeHTML(this.rejoinKey)}</a>`);
-        this.otherKeyDisp = this.sidebar.append("p").html(`Key to invite friend: <a href="#${escapeHTML(this.otherKey)}">${escapeHTML(this.otherKey)}</a>`);
-        this.specKeyDisp = this.sidebar.append("p").html(`Key to spectate: <a href="#${escapeHTML(this.specKey)}">${escapeHTML(this.specKey)}</a>`);
+        this.curKeyDisp = this.sidebar.append("p").html(`Key to rejoin: <a target="_blank" href="#${escapeHTML(this.rejoinKey)}">${escapeHTML(this.rejoinKey)}</a>`);
+        this.otherKeyDisp = this.sidebar.append("p").html(`Key to invite friend: <a target="_blank" href="#${escapeHTML(this.otherKey)}">${escapeHTML(this.otherKey)}</a>`);
+        this.specKeyDisp = this.sidebar.append("p").html(`Key to spectate: <a target="_blank" href="#${escapeHTML(this.specKey)}">${escapeHTML(this.specKey)}</a>`);
         this.chat = this.sidebar.append("div").classed("chat", true);
         this.chatMesses = this.chat.append("div");
         this.chatInput = this.chat.append("input")
@@ -19,7 +19,7 @@ class OnlineBoard extends Board {
         this.updateMovetext();
         var cur = this;
         this.chatInput.on("keydown", function() {
-            if (d3.event.code == "Enter") {
+            if (d3.event.key == "Enter" || d3.event.keyCode == 13) {
                 var inp = this.value;
                 if (inp[0] == "/") {
                     // start processing commands

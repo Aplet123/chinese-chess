@@ -114,6 +114,7 @@ svg {
 .chat div {
     flex: 1 0 0;
     overflow-y: auto;
+    word-wrap: break-word;
 }
 
 .chat div::-webkit-scrollbar {
