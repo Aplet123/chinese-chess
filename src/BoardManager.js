@@ -201,12 +201,15 @@ class BoardManager {
     }
 
     sendOther(key, ins, v) {
+        if (this.getSide(key) == "spec") {
+            this.sendTo(this.getSpecKey(key), ins, v);
+            return;
+        }
         key = this.getOtherKey(key);
         if (!key) {
             return;
         }
         this.sendTo(key, ins, v);
-        this.sendTo(this.getSpecKey(key), ins, v);
     }
 
     sendAll(key, ins, v) {
