@@ -127,21 +127,63 @@ class OnlineBoard extends Board {
                 this.cached = null;
             }
         } else if (data.ins == "OP_JOINED") {
+            var title;
+            if (this.side == "spec") {
+                if (data.v == "black") {
+                    title = "Black";
+                } else if (data.v == "white") {
+                    title = "White";
+                } else if (data.v == "spec") {
+                    title = "Spectator";
+                }
+            } else {
+                if (data.v == this.side) {
+                    title = "You";
+                } else {
+                    title = "Opponent";
+                }
+            }
             this.displayMessage({
                 italics: true,
-                message: "Opponent has joined the room."
+                message: `${title} has joined the room.`
             });
         } else if (data.ins == "OP_DC") {
+            var title;
+            if (this.side == "spec") {
+                if (data.v == "black") {
+                    title = "Black";
+                } else if (data.v == "white") {
+                    title = "White";
+                } else if (data.v == "spec") {
+                    title = "Spectator";
+                }
+            } else {
+                if (data.v == this.side) {
+                    title = "You";
+                } else {
+                    title = "Opponent";
+                }
+            }
             this.displayMessage({
                 italics: true,
-                message: "Opponent has left the room."
+                message: `${title} has left the room.`
             });
         } else if (data.ins == "CHAT") {
             var title;
-            if (data.v.side == this.side) {
-                title = "You";
+            if (this.side == "spec") {
+                if (data.v.side == "black") {
+                    title = "Black";
+                } else if (data.v.side == "white") {
+                    title = "White";
+                } else if (data.v.side == "spec") {
+                    title = "Spectator";
+                }
             } else {
-                title = "Opponent";
+                if (data.v.side == this.side) {
+                    title = "You";
+                } else if (data.v) {
+                    title = "Opponent";
+                }
             }
             this.displayMessage({
                 title: title,

@@ -69,7 +69,7 @@ class BoardManager {
             } else if (key == board.blackKey) {
                 return "black";
             } else if (key == board.specKey) {
-                return "spectator";
+                return "spec";
             }
         }
         return null;
@@ -82,7 +82,7 @@ class BoardManager {
            return board.blackKey;
         } else if (board && side && side == "black") {
             return board.whiteKey;
-        } else if (board && side && side == "spectator") {
+        } else if (board && side && side == "spec") {
             return board.specKey;
         }
     }
@@ -103,7 +103,7 @@ class BoardManager {
         } else if (side == "black"){
             board.blackPlayer = true;
             board.blackWS = ws;
-        } else if (side == "spectator") {
+        } else if (side == "spec") {
             board.specWS.push(ws);
         }
     }
@@ -117,7 +117,7 @@ class BoardManager {
         } else if (board && side && side == "black") {
             board.blackPlayer = false;
             board.blackWS = null;
-        } else if (board && side && side == "spectator") {
+        } else if (board && side && side == "spec") {
             // for spectators key is expected to be the actual ws
             board.specWS.splice(board.specWS.indexOf(key), 1);
         }
@@ -130,7 +130,7 @@ class BoardManager {
             return ! board.whitePlayer;
         } else if (board && side && side == "black") {
             return ! board.blackPlayer;
-        } else if (board && side && side == "spectator") {
+        } else if (board && side && side == "spec") {
             return true;
         }
         return false;
@@ -190,7 +190,7 @@ class BoardManager {
                 v
             }));
         }
-        if (side == "spectator") {
+        if (side == "spec") {
             for (var i = 0; i < board.specWS.length; i ++) {
                 board.specWS[i].send(JSON.stringify({
                     ins,
@@ -201,8 +201,8 @@ class BoardManager {
     }
 
     sendOther(key, ins, v) {
+        this.sendTo(this.getSpecKey(key), ins, v);
         if (this.getSide(key) == "spec") {
-            this.sendTo(this.getSpecKey(key), ins, v);
             return;
         }
         key = this.getOtherKey(key);
@@ -213,8 +213,10 @@ class BoardManager {
     }
 
     sendAll(key, ins, v) {
+        if (this.getSide(key) != "spec") {
+            this.sendOther(key, ins, v);
+        }
         this.sendTo(key, ins, v);
-        this.sendOther(key, ins, v);
     }
 }
 

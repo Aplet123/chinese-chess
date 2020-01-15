@@ -34,7 +34,7 @@ function init (bm) {
                     sendInstruction("OTHERKEY", bm.getOtherKey(key));
                     sendInstruction("SPECKEY", bm.getSpecKey(key));
                     sendInstruction("JOINED", true);
-                    bm.sendOther(key, "OP_JOINED");
+                    bm.sendOther(key, "OP_JOINED", bm.getSide(key));
                 } else {
                     sendInstruction("JOINED", false);
                 }
@@ -66,7 +66,7 @@ function init (bm) {
                 if (key) {
                     let board = bm.getBoard(key);
                     let side = bm.getSide(key);
-                    if (board && side) {
+                    if (board && side && side != "spec") {
                         bm.sendAll(key, "WINCON", side + "_forfeit");
                     }
                 }
@@ -74,7 +74,7 @@ function init (bm) {
                 if (key) {
                     let board = bm.getBoard(key);
                     let side = bm.getSide(key);
-                    if (board && side) {
+                    if (board && side && side != "spec") {
                         if (!(board.blackDraw || board.whiteDraw)) {
                             bm.sendOther(key, "OP_DRAW");
                         }
@@ -91,7 +91,7 @@ function init (bm) {
             }
         });
         ws.on("close", function () {
-            bm.sendOther(key, "OP_DC");
+            bm.sendOther(key, "OP_DC", bm.getSide(key));
             bm.leave(key);
         });
         // close broken connections
