@@ -394,10 +394,6 @@ class StandardBoard extends Board {
     }
 
     updateMovetext() {
-        if (this.turn == "white") {
-            this.movetext.text("White to move.");
-        } else if (this.turn == "black") {
-            this.movetext.text("Black to move.");
-        }
+        this.movetext.text(`${getNameCaps(this.turn)} to move.`);
     }
 }

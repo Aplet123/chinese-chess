@@ -132,7 +132,7 @@ class OnlineBoard extends Board {
                 if (data.v == "black") {
                     title = "Black";
                 } else if (data.v == "white") {
-                    title = "White";
+                    title = "Red";
                 } else if (data.v == "spec") {
                     title = "Spectator";
                 }
@@ -153,7 +153,7 @@ class OnlineBoard extends Board {
                 if (data.v == "black") {
                     title = "Black";
                 } else if (data.v == "white") {
-                    title = "White";
+                    title = "Red";
                 } else if (data.v == "spec") {
                     title = "Spectator";
                 }
@@ -306,10 +306,6 @@ class OnlineStandardBoard extends OnlineBoard {
         if (! this.rendered) {
             return;
         }
-        if (this.turn == "white") {
-            this.movetext.text(`You are ${this.side}. White to move.`);
-        } else if (this.turn == "black") {
-            this.movetext.text(`You are ${this.side}. Black to move.`);
-        }
+        this.movetext.text(`You are ${getName(this.side)}. ${getNameCaps(this.turn)} to move.`);
     }
 }
